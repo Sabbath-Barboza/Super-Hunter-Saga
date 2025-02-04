@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: f13f0b766a4f71b4d9be12410165a3b2
+PrefabImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 304936
+  packageName: Monster Survivors - Full Game
+  packageVersion: 1.0.1
+  assetPath: Assets/Common/Prefabs/Abilities/Projectiles/Spike.prefab
+  uploadId: 726958
