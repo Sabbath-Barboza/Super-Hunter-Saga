@@ -504,6 +504,11 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 21300000, guid: c02f34583a82beb4294c26c8b450480c,
         type: 3}
+    - target: {fileID: 836784519714041174, guid: 87037a1917e2b7f449d41588eec2b009,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1760300599552990409, guid: 87037a1917e2b7f449d41588eec2b009,
         type: 3}
       propertyPath: 'm_ActiveFontFeatures.Array.data[0]'
@@ -643,6 +648,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7740286807154701139, guid: 87037a1917e2b7f449d41588eec2b009,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7983962622462959626, guid: 87037a1917e2b7f449d41588eec2b009,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8401933773176376946, guid: 87037a1917e2b7f449d41588eec2b009,
         type: 3}
