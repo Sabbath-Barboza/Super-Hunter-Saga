@@ -34,6 +34,10 @@ namespace OctoberStudio.Easing
         {
             return new NextFrameCoroutine();
         }
+        public static IEasingCoroutine DoNextFrame(UnityAction action)
+        {
+            return new NextFrameCoroutine().SetOnFinish(action);
+        }
 
         public static IEasingCoroutine DoNextFixedFrame()
         {

@@ -1,3 +1,4 @@
+using OctoberStudio.Abilities;
 using OctoberStudio.Abilities.UI;
 using OctoberStudio.Audio;
 using OctoberStudio.Bossfight;
@@ -6,6 +7,8 @@ using OctoberStudio.UI;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 namespace OctoberStudio
@@ -18,8 +21,13 @@ namespace OctoberStudio
         [SerializeField] JoystickBehavior joystick;
 
         [Header("Abilities")]
-        [SerializeField] AbilitiesWindowBehavior abilitiesPanel;
+        [FormerlySerializedAs("abilitiesPanel")]
+        [SerializeField] AbilitiesWindowBehavior abilitiesWindow;
+        [SerializeField] ChestWindowBehavior chestWindow;
         [SerializeField] List<AbilitiesIndicatorsListBehavior> abilitiesLists;
+
+        public AbilitiesWindowBehavior AbilitiesWindow => abilitiesWindow;
+        public ChestWindowBehavior ChestWindow => chestWindow;
 
         [Header("Top UI")]
         [SerializeField] CanvasGroup topUI;
@@ -36,13 +44,27 @@ namespace OctoberStudio
         {
             canvas = GetComponent<Canvas>();
 
-            abilitiesPanel.onPanelClosed += OnAbilitiesPanelClosed;
-            abilitiesPanel.onPanelStartedClosing += OnAbilitiesPanelStartedClosing;
+            abilitiesWindow.onPanelClosed += OnAbilitiesPanelClosed;
+            abilitiesWindow.onPanelStartedClosing += OnAbilitiesPanelStartedClosing;
 
             pauseButton.onClick.AddListener(PauseButtonClick);
 
             pauseWindow.OnStartedClosing += OnPauseWindowStartedClosing;
             pauseWindow.OnClosed += OnPauseWindowClosed;
+
+            chestWindow.OnClosed += OnChestWindowClosed;
+        }
+
+        private void Start()
+        {
+            abilitiesWindow.Init();
+
+            GameController.InputManager.InputAsset.UI.Settings.performed += OnSettingsInputClicked;
+        }
+
+        private void OnSettingsInputClicked(InputAction.CallbackContext context)
+        {
+            pauseButton.onClick?.Invoke();
         }
 
         public void Show(Action onFinish = null)
@@ -87,8 +109,10 @@ namespace OctoberStudio
             bossHealthbar.SetBoss(enemy);
         }
 
-        public void ShowAbilitiesPanel(bool isLevelUp)
+        public void ShowAbilitiesPanel(List<AbilityData> abilities, bool isLevelUp)
         {
+            abilitiesWindow.SetData(abilities);
+
             EasingManager.DoAfter(0.2f, () =>
             {
                 for (int i = 0; i < abilitiesLists.Count; i++)
@@ -102,7 +126,9 @@ namespace OctoberStudio
 
             blackgroundTint.Show();
 
-            abilitiesPanel.Show(isLevelUp);
+            abilitiesWindow.Show(isLevelUp);
+
+            GameController.InputManager.InputAsset.UI.Settings.performed -= OnSettingsInputClicked;
         }
 
         private void OnAbilitiesPanelStartedClosing()
@@ -119,7 +145,19 @@ namespace OctoberStudio
 
         private void OnAbilitiesPanelClosed()
         {
-            
+            GameController.InputManager.InputAsset.UI.Settings.performed += OnSettingsInputClicked;
+        }
+
+        public void ShowChestWindow(int tierId, List<AbilityData> abilities, List<AbilityData> selectedAbilities)
+        {
+            chestWindow.OpenWindow(tierId, abilities, selectedAbilities);
+
+            GameController.InputManager.InputAsset.UI.Settings.performed -= OnSettingsInputClicked;
+        }
+
+        private void OnChestWindowClosed()
+        {
+            GameController.InputManager.InputAsset.UI.Settings.performed += OnSettingsInputClicked;
         }
 
         private void PauseButtonClick()
@@ -130,11 +168,18 @@ namespace OctoberStudio
 
             blackgroundTint.Show();
             pauseWindow.Open();
+
+            GameController.InputManager.InputAsset.UI.Settings.performed -= OnSettingsInputClicked;
         }
         
         private void OnPauseWindowClosed()
         {
-            joystick.Enable();
+            if(GameController.InputManager.ActiveInput == Input.InputType.UIJoystick)
+            {
+                joystick.Enable();
+            }
+
+            GameController.InputManager.InputAsset.UI.Settings.performed += OnSettingsInputClicked;
         }
 
         private void OnPauseWindowStartedClosing()

@@ -13,19 +13,6 @@ namespace OctoberStudio.UI
 
         private float spacing;
 
-        public static ScalingLabelBehavior instance;
-        
-        public static ScalingLabelBehavior Instance
-        {
-            get
-            {
-                instance = instance != null ? instance : new();
-                return instance;
-            }
-        }
-
-
-
         private void Awake()
         {
             spacing = label.rectTransform.anchoredPosition.x - label.rectTransform.sizeDelta.x / 2 - icon.rectTransform.anchoredPosition.x - icon.rectTransform.sizeDelta.x / 2;

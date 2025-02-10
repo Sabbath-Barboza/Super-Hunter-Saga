@@ -8,23 +8,14 @@ namespace OctoberStudio
     {
         [SerializeField] int amount;
         public int Amount => amount;
-        private static CurrencySave _instance;
-        public static CurrencySave Instance
-        {
-            get
-            {
-                _instance ??= new CurrencySave();
-                return _instance;
-            }
-        }
 
-        public event Action<int> OnGoldAmountChanged;
-     
+        public event Action<int> onGoldAmountChanged;
+
         public void Deposit(int depositedAmount)
         {
             amount += depositedAmount;
 
-            OnGoldAmountChanged?.Invoke(amount);
+            onGoldAmountChanged?.Invoke(amount);
         }
 
         public void Withdraw(int withdrawnAmount)
@@ -32,7 +23,7 @@ namespace OctoberStudio
             amount -= withdrawnAmount;
             if (amount < 0) amount = 0;
 
-            OnGoldAmountChanged?.Invoke(amount);
+            onGoldAmountChanged?.Invoke(amount);
         }
 
         public bool TryWithdraw(int withdrawnAmount)
@@ -43,7 +34,7 @@ namespace OctoberStudio
             {
                 amount -= withdrawnAmount;
 
-                OnGoldAmountChanged?.Invoke(amount);
+                onGoldAmountChanged?.Invoke(amount);
             }
 
             return canAfford;

@@ -37,6 +37,11 @@ namespace OctoberStudio.Timeline.Bossfight
 
                 var bossSpawnPosition = StageController.FieldManager.SpawnFence(BossType, BossSpawnOffset);
 
+                if (StageController.Stage.RemovePropFromBossfight && StageController.Stage.SpawnProp)
+                {
+                    StageController.FieldManager.RemovePropFromFence();
+                }
+
                 EasingManager.DoAfter(0.3f, () => 
                 {
                     var data = StageController.EnemiesSpawner.GetBossData(BossType);

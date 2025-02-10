@@ -493,62 +493,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 939537393383497307}
     m_Modifications:
-    - target: {fileID: 76013081888184406, guid: 87037a1917e2b7f449d41588eec2b009,
-        type: 3}
-      propertyPath: 'm_ActiveFontFeatures.Array.data[0]'
-      value: 1801810542
-      objectReference: {fileID: 0}
-    - target: {fileID: 408655458803658148, guid: 87037a1917e2b7f449d41588eec2b009,
-        type: 3}
-      propertyPath: m_Sprite
-      value: 
-      objectReference: {fileID: 21300000, guid: c02f34583a82beb4294c26c8b450480c,
-        type: 3}
-    - target: {fileID: 836784519714041174, guid: 87037a1917e2b7f449d41588eec2b009,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1760300599552990409, guid: 87037a1917e2b7f449d41588eec2b009,
-        type: 3}
-      propertyPath: 'm_ActiveFontFeatures.Array.data[0]'
-      value: 1801810542
-      objectReference: {fileID: 0}
-    - target: {fileID: 2843224129020567642, guid: 87037a1917e2b7f449d41588eec2b009,
-        type: 3}
-      propertyPath: m_SizeDelta.x
-      value: 700
-      objectReference: {fileID: 0}
-    - target: {fileID: 2843224129020567642, guid: 87037a1917e2b7f449d41588eec2b009,
-        type: 3}
-      propertyPath: m_SizeDelta.y
-      value: 500
-      objectReference: {fileID: 0}
-    - target: {fileID: 2843224129020567642, guid: 87037a1917e2b7f449d41588eec2b009,
-        type: 3}
-      propertyPath: m_LocalScale.x
-      value: 1.0740824
-      objectReference: {fileID: 0}
-    - target: {fileID: 2843224129020567642, guid: 87037a1917e2b7f449d41588eec2b009,
-        type: 3}
-      propertyPath: m_LocalScale.y
-      value: 1.2546536
-      objectReference: {fileID: 0}
-    - target: {fileID: 2843224129020567642, guid: 87037a1917e2b7f449d41588eec2b009,
-        type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: -6
-      objectReference: {fileID: 0}
-    - target: {fileID: 2843224129020567642, guid: 87037a1917e2b7f449d41588eec2b009,
-        type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: -64
-      objectReference: {fileID: 0}
-    - target: {fileID: 3408135354649375368, guid: 87037a1917e2b7f449d41588eec2b009,
-        type: 3}
-      propertyPath: m_ActiveFontFeatures.Array.size
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 5439372593582521500, guid: 87037a1917e2b7f449d41588eec2b009,
         type: 3}
       propertyPath: m_Pivot.x
@@ -648,16 +592,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7740286807154701139, guid: 87037a1917e2b7f449d41588eec2b009,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7983962622462959626, guid: 87037a1917e2b7f449d41588eec2b009,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8401933773176376946, guid: 87037a1917e2b7f449d41588eec2b009,
         type: 3}
@@ -819,25 +753,15 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 939537393383497307}
     m_Modifications:
-    - target: {fileID: 1116193612038024762, guid: b3d406b10c9689b46a0e45dbe8b4064f,
-        type: 3}
-      propertyPath: 'm_ActiveFontFeatures.Array.data[0]'
-      value: 1801810542
-      objectReference: {fileID: 0}
-    - target: {fileID: 3235843102072585782, guid: b3d406b10c9689b46a0e45dbe8b4064f,
-        type: 3}
-      propertyPath: 'm_ActiveFontFeatures.Array.data[0]'
-      value: 1801810542
-      objectReference: {fileID: 0}
-    - target: {fileID: 3563331024560877894, guid: b3d406b10c9689b46a0e45dbe8b4064f,
-        type: 3}
-      propertyPath: 'm_ActiveFontFeatures.Array.data[0]'
-      value: 1801810542
-      objectReference: {fileID: 0}
     - target: {fileID: 6035590262003372843, guid: b3d406b10c9689b46a0e45dbe8b4064f,
         type: 3}
       propertyPath: m_Name
       value: Settings Window
+      objectReference: {fileID: 0}
+    - target: {fileID: 6035590262003372843, guid: b3d406b10c9689b46a0e45dbe8b4064f,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7659281229949718557, guid: b3d406b10c9689b46a0e45dbe8b4064f,
         type: 3}
@@ -938,16 +862,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8626116420230960952, guid: b3d406b10c9689b46a0e45dbe8b4064f,
-        type: 3}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9132815961423892714, guid: b3d406b10c9689b46a0e45dbe8b4064f,
-        type: 3}
-      propertyPath: 'm_ActiveFontFeatures.Array.data[0]'
-      value: 1801810542
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1080,30 +994,15 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 2247906825159923184, guid: 22aee585078fe8d4b86138fb1ff9a39a,
-        type: 3}
-      propertyPath: 'm_ActiveFontFeatures.Array.data[0]'
-      value: 1801810542
-      objectReference: {fileID: 0}
-    - target: {fileID: 3405215252158189377, guid: 22aee585078fe8d4b86138fb1ff9a39a,
-        type: 3}
-      propertyPath: m_SizeDelta.y
-      value: 1745.8193
-      objectReference: {fileID: 0}
-    - target: {fileID: 3405215252158189377, guid: 22aee585078fe8d4b86138fb1ff9a39a,
-        type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 63.090332
-      objectReference: {fileID: 0}
-    - target: {fileID: 7636240880189593823, guid: 22aee585078fe8d4b86138fb1ff9a39a,
-        type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 241
-      objectReference: {fileID: 0}
     - target: {fileID: 8714439532114961313, guid: 22aee585078fe8d4b86138fb1ff9a39a,
         type: 3}
       propertyPath: m_Name
       value: Characters Window
+      objectReference: {fileID: 0}
+    - target: {fileID: 8714439532114961313, guid: 22aee585078fe8d4b86138fb1ff9a39a,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1236,20 +1135,15 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 2247906825159923184, guid: e759716e46678c34fa8bd75fd47d5277,
-        type: 3}
-      propertyPath: 'm_ActiveFontFeatures.Array.data[0]'
-      value: 1801810542
-      objectReference: {fileID: 0}
-    - target: {fileID: 7636240880189593823, guid: e759716e46678c34fa8bd75fd47d5277,
-        type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 231
-      objectReference: {fileID: 0}
     - target: {fileID: 8714439532114961313, guid: e759716e46678c34fa8bd75fd47d5277,
         type: 3}
       propertyPath: m_Name
       value: Upgrades Window
+      objectReference: {fileID: 0}
+    - target: {fileID: 8714439532114961313, guid: e759716e46678c34fa8bd75fd47d5277,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

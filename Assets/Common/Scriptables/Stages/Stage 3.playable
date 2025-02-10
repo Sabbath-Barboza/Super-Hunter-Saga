@@ -626,7 +626,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d3c1218c80952a14489e47b5be94c184, type: 3}
-  m_Name: Track (PurpleJellyfish)
+  m_Name: Track (Wasp)
   m_EditorClassIdentifier: 
   m_Version: 3
   m_AnimClip: {fileID: 0}
@@ -777,7 +777,7 @@ MonoBehaviour:
     m_DisplayName: Burst
   m_Markers:
     m_Objects: []
-  enemyType: 13
+  enemyType: 9
 --- !u!114 &-8777121907280717189
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -828,7 +828,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d3c1218c80952a14489e47b5be94c184, type: 3}
-  m_Name: Track (Wasp)
+  m_Name: Track (Slime)
   m_EditorClassIdentifier: 
   m_Version: 3
   m_AnimClip: {fileID: 0}
@@ -1324,7 +1324,7 @@ MonoBehaviour:
     m_DisplayName: Continuous
   m_Markers:
     m_Objects: []
-  enemyType: 9
+  enemyType: 2
 --- !u!114 &-8024893890980066971
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2041,7 +2041,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d3c1218c80952a14489e47b5be94c184, type: 3}
-  m_Name: Track (ShadeJellyfish)
+  m_Name: Track (Jellyfish)
   m_EditorClassIdentifier: 
   m_Version: 3
   m_AnimClip: {fileID: 0}
@@ -2192,7 +2192,7 @@ MonoBehaviour:
     m_DisplayName: Burst
   m_Markers:
     m_Objects: []
-  enemyType: 16
+  enemyType: 5
 --- !u!114 &-2398857761232901989
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2367,7 +2367,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d3c1218c80952a14489e47b5be94c184, type: 3}
-  m_Name: Track (Jellyfish)
+  m_Name: Track (Pumpkin)
   m_EditorClassIdentifier: 
   m_Version: 3
   m_AnimClip: {fileID: 0}
@@ -2740,7 +2740,7 @@ MonoBehaviour:
     m_DisplayName: Continuous
   m_Markers:
     m_Objects: []
-  enemyType: 5
+  enemyType: 0
 --- !u!114 &-500177020245908283
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2751,7 +2751,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d3c1218c80952a14489e47b5be94c184, type: 3}
-  m_Name: Track (FireSlime)
+  m_Name: Track (PurpleJellyfish)
   m_EditorClassIdentifier: 
   m_Version: 3
   m_AnimClip: {fileID: 0}
@@ -3073,7 +3073,7 @@ MonoBehaviour:
     m_DisplayName: Burst
   m_Markers:
     m_Objects: []
-  enemyType: 12
+  enemyType: 13
 --- !u!114 &-355948323876061689
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3192,7 +3192,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d3c1218c80952a14489e47b5be94c184, type: 3}
-  m_Name: Track (Hand)
+  m_Name: Track (StagBeetle)
   m_EditorClassIdentifier: 
   m_Version: 3
   m_AnimClip: {fileID: 0}
@@ -3412,7 +3412,7 @@ MonoBehaviour:
     m_DisplayName: Burst
   m_Markers:
     m_Objects: []
-  enemyType: 10
+  enemyType: 14
 --- !u!114 &1735497828996439206
 MonoBehaviour:
   m_ObjectHideFlags: 1

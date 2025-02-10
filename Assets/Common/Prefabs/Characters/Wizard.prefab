@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 1385333651283103268}
   - component: {fileID: 1063248840227528509}
   - component: {fileID: 7287836714573634366}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Wizard
   m_TagString: Untagged
   m_Icon: {fileID: 0}

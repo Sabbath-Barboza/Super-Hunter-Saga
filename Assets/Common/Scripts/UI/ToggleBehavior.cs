@@ -1,6 +1,7 @@
 using OctoberStudio.Audio;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 namespace OctoberStudio.UI
@@ -36,6 +37,11 @@ namespace OctoberStudio.UI
             SetToggle(!IsOn);
 
             GameController.AudioManager.PlaySound(AudioManager.BUTTON_CLICK_HASH);
+        }
+
+        public void Select()
+        {
+            EventSystem.current.SetSelectedGameObject(toggleButton.gameObject);
         }
     }
 }

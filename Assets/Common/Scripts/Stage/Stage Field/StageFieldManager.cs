@@ -38,7 +38,7 @@ namespace OctoberStudio
                 case StageType.Rect: field = new RectFieldBehavior(); break;
             }
 
-            field.Init(stageData.StageFieldData);
+            field.Init(stageData.StageFieldData, stageData.SpawnProp);
 
             fences = new Dictionary<BossType, BossFenceBehavior>();
 
@@ -75,6 +75,11 @@ namespace OctoberStudio
         {
             Fence.RemoveFence();
             Fence = null;
+        }
+
+        public void RemovePropFromFence()
+        {
+            field.RemovePropFromBossFence(Fence);
         }
 
         private void Update()

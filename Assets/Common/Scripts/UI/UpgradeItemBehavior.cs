@@ -2,12 +2,17 @@ using OctoberStudio.Audio;
 using OctoberStudio.UI;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Events;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 namespace OctoberStudio.Upgrades.UI
 {
     public class UpgradeItemBehavior : MonoBehaviour
     {
+        [SerializeField] RectTransform rect;
+        public RectTransform Rect => rect;
+
         [Header("Info")]
         [SerializeField] Image iconImage;
         [SerializeField] TMP_Text titleLabel;
@@ -27,6 +32,11 @@ namespace OctoberStudio.Upgrades.UI
         public UpgradeData Data { get; private set; }
         public int UpgradeLevelId { get; private set; }
 
+        public Selectable Selectable => upgradeButton;
+        public bool IsSelected { get; private set; }
+
+        public UnityAction<UpgradeItemBehavior> onNavigationSelected;
+
         private void Start()
         {
             upgradeButton.onClick.AddListener(UpgradeButtonClick);
@@ -37,7 +47,7 @@ namespace OctoberStudio.Upgrades.UI
             if(GoldCurrency == null)
             {
                 GoldCurrency = GameController.SaveManager.GetSave<CurrencySave>("gold");
-                GoldCurrency.OnGoldAmountChanged += OnGoldAmountChanged;
+                GoldCurrency.onGoldAmountChanged += OnGoldAmountChanged;
             }
 
             Data = data;
@@ -70,7 +80,7 @@ namespace OctoberStudio.Upgrades.UI
                 costLabel.gameObject.SetActive(false);
                 upgradedLabel.gameObject.SetActive(true);
 
-                upgradeButton.enabled = false;
+                upgradeButton.interactable = false;
                 upgradeButton.image.sprite = disabledButtonSprite;
             }
             else
@@ -83,11 +93,11 @@ namespace OctoberStudio.Upgrades.UI
 
                 if (GoldCurrency.CanAfford(level.Cost))
                 {
-                    upgradeButton.enabled = true;
+                    upgradeButton.interactable = true;
                     upgradeButton.image.sprite = enabledButtonSprite;
                 } else
                 {
-                    upgradeButton.enabled = false;
+                    upgradeButton.interactable = false;
                     upgradeButton.image.sprite = disabledButtonSprite;
                 }
             }
@@ -104,6 +114,8 @@ namespace OctoberStudio.Upgrades.UI
             RedrawVisuals();
 
             GameController.AudioManager.PlaySound(AudioManager.BUTTON_CLICK_HASH);
+
+            EventSystem.current.SetSelectedGameObject(upgradeButton.gameObject);
         }
 
         private void OnGoldAmountChanged(int amount)
@@ -111,11 +123,35 @@ namespace OctoberStudio.Upgrades.UI
             RedrawButton();
         }
 
-        private void OnDestroy()
+        public void Select()
         {
-            if(GoldCurrency != null)
+            EventSystem.current.SetSelectedGameObject(upgradeButton.gameObject);
+        }
+
+        public void Unselect()
+        {
+            IsSelected = false;
+        }
+
+        private void Update()
+        {
+            if (!IsSelected && EventSystem.current.currentSelectedGameObject == upgradeButton.gameObject)
             {
-                GoldCurrency.OnGoldAmountChanged -= OnGoldAmountChanged;
+                IsSelected = true;
+
+                onNavigationSelected?.Invoke(this);
+            }
+            else if (IsSelected && EventSystem.current.currentSelectedGameObject != upgradeButton.gameObject)
+            {
+                IsSelected = false;
+            }
+        }
+
+        public void Clear()
+        {
+            if (GoldCurrency != null)
+            {
+                GoldCurrency.onGoldAmountChanged -= OnGoldAmountChanged;
             }
         }
     }

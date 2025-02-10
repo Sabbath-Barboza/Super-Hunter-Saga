@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace OctoberStudio
 {
-    public class HorizontalFieldBehavior : IFieldBehavior
+    public class HorizontalFieldBehavior : AbstractFieldBehavior
     {
         private PoolComponent<StageChunkBehavior> backgroundPool;
         private PoolComponent<Transform> topPool;
@@ -17,8 +17,9 @@ namespace OctoberStudio
 
         bool wait = false;
 
-        public void Init(StageFieldData stageFieldData)
+        public override void Init(StageFieldData stageFieldData, bool spawnProp)
         {
+            base.Init(stageFieldData, spawnProp);
             backgroundPool = new PoolComponent<StageChunkBehavior>("Field Background", stageFieldData.BackgroundPrefab, 4);
 
             if (stageFieldData.LeftPrefab != null)
@@ -45,7 +46,7 @@ namespace OctoberStudio
             EasingManager.DoNextFrame().SetOnFinish(() => wait = true);
         }
 
-        public void Update()
+        public override void Update()
         {
             if (!wait) return;
 
@@ -73,6 +74,7 @@ namespace OctoberStudio
                 chunk.transform.localScale = Vector3.one;
 
                 AddBordersToChunk(chunk);
+                SpawnProp(chunk);
 
                 chunks.Insert(0, chunk);
             }
@@ -90,6 +92,7 @@ namespace OctoberStudio
                 chunk.transform.localScale = Vector3.one;
 
                 AddBordersToChunk(chunk);
+                SpawnProp(chunk);
 
                 chunks.Add(chunk);
             }
@@ -157,7 +160,7 @@ namespace OctoberStudio
         #endregion
 
 
-        public bool ValidatePosition(Vector2 position)
+        public override bool ValidatePosition(Vector2 position)
         {
             if (position.y > chunks[0].transform.position.y + chunks[0].Size.y / 2) return false;
             if (position.y < chunks[0].transform.position.y - chunks[0].Size.y / 2) return false;
@@ -165,7 +168,7 @@ namespace OctoberStudio
             return true;
         }
 
-        public Vector2 GetBossSpawnPosition(BossFenceBehavior fence, Vector2 offset)
+        public override Vector2 GetBossSpawnPosition(BossFenceBehavior fence, Vector2 offset)
         {
             var playerPosition = PlayerBehavior.Player.transform.position.XY();
 
@@ -198,7 +201,7 @@ namespace OctoberStudio
             return playerPosition + offset;
         }
 
-        public Vector2 GetRandomPositionOnBorder()
+        public override Vector2 GetRandomPositionOnBorder()
         {
             float y = Random.Range(-chunks[0].Size.y / 2, chunks[0].Size.y / 2) + chunks[0].transform.position.y;
 
@@ -208,33 +211,41 @@ namespace OctoberStudio
             return new Vector2(x, y);
         }
 
-        public bool IsPointOutsideRight(Vector2 point, out float distance)
+        public override bool IsPointOutsideRight(Vector2 point, out float distance)
         {
             distance = 0;
             return false;
         }
 
-        public bool IsPointOutsideLeft(Vector2 point, out float distance)
+        public override bool IsPointOutsideLeft(Vector2 point, out float distance)
         {
             distance = 0;
             return false;
         }
 
-        public bool IsPointOutsideTop(Vector2 point, out float distance)
+        public override bool IsPointOutsideTop(Vector2 point, out float distance)
         {
             bool result = point.y > chunks[0].TopBound;
             distance = result ? point.y - chunks[0].TopBound : 0;
             return result;
         }
 
-        public bool IsPointOutsideBottom(Vector2 point, out float distance)
+        public override bool IsPointOutsideBottom(Vector2 point, out float distance)
         {
             bool result = point.y < chunks[0].BottomBound;
             distance = result ? chunks[0].BottomBound - point.y : 0;
             return result;
         }
 
-        public void Clear()
+        public override void RemovePropFromBossFence(BossFenceBehavior fence)
+        {
+            for(int i = 0; i < chunks.Count; i++)
+            {
+                chunks[i].RemovePropFromBossFence(fence);
+            }
+        }
+
+        public override void Clear()
         {
             backgroundPool.Destroy();
         }

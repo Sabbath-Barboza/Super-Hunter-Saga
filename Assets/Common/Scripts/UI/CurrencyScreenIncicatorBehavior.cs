@@ -18,12 +18,12 @@ namespace OctoberStudio.Currency
 
             icon.sprite = GameController.CurrenciesManager.GetIcon(currencyID);
 
-            Currency.OnGoldAmountChanged += SetAmount;
+            Currency.onGoldAmountChanged += SetAmount;
         }
 
         private void OnDestroy()
         {
-            Currency.OnGoldAmountChanged -= SetAmount;
+            Currency.onGoldAmountChanged -= SetAmount;
         }
     }
 }

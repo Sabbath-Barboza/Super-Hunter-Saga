@@ -31,6 +31,21 @@ namespace OctoberStudio
         public GameObject TopLeftPrefab => topLeftPrefab;
         public GameObject BottomRightPrefab => bottomRightPrefab;
         public GameObject BottomLeftPrefab => bottomLeftPrefab;
+
+        [Header("Prop")]
+        [SerializeField] List<StagePropData> propChances;
+        public List<StagePropData> PropChances => propChances;
     }
 
+    [System.Serializable]
+    public class StagePropData
+    {
+        [SerializeField] GameObject prefab;
+        [SerializeField, Min(1)] int maxAmount;
+        [SerializeField, Range(0, 100)] float chance;
+        
+        public GameObject Prefab => prefab;
+        public int MaxAmount => maxAmount;
+        public float Chance => chance;
+    }
 }

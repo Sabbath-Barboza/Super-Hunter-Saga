@@ -52,13 +52,10 @@ namespace OctoberStudio
             instance = this;
 
             stageSave = GameController.SaveManager.GetSave<StageSave>("Stage");
-
-            AdsManager.Adinstance.LoadBannerAD();
         }
 
         private void Start()
         {
-            
             Stage = database.GetStage(stageSave.SelectedStageId);
 
             director.playableAsset = Stage.Timeline;
@@ -67,7 +64,7 @@ namespace OctoberStudio
             experienceManager.Init(testingPreset);
             dropManager.Init();
             fieldManager.Init(Stage, director);
-            abilityManager.Init(testingPreset);
+            abilityManager.Init(testingPreset, PlayerBehavior.Player.Data);
             cameraManager.Init(Stage);
 
             PlayerBehavior.Player.onPlayerDied += OnGameFailed;
@@ -94,6 +91,7 @@ namespace OctoberStudio
 
                 director.time = time;
             }
+
             director.Play();
         }
 
@@ -107,7 +105,7 @@ namespace OctoberStudio
                 }
 
                 stageSave.IsPlaying = false;
-                GameController.SaveManager.Save(true, true);
+                GameController.SaveManager.Save(true);
 
                 gameScreen.Hide();
                 stageCompletedScreen.Show();
@@ -120,7 +118,7 @@ namespace OctoberStudio
             Time.timeScale = 0;
 
             stageSave.IsPlaying = false;
-            GameController.SaveManager.Save(true, true);
+            GameController.SaveManager.Save(true);
 
             gameScreen.Hide();
             stageFailedScreen.Show();

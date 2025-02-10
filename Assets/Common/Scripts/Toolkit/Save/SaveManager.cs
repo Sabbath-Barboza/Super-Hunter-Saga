@@ -2,6 +2,8 @@ using System.Collections;
 using UnityEngine;
 using System.Threading;
 using UnityEngine.Events;
+using OctoberStudio.Easing;
+using System.IO;
 
 #if UNITY_WEBGL && !UNITY_EDITOR
 using System.Runtime.InteropServices;
@@ -25,9 +27,10 @@ namespace OctoberStudio.Save
         private SaveDatabase SaveDatabase { get; set; }
 
         public bool IsSaveLoaded { get; private set; }
-        public bool IsDirty { get; private set; }
 
         public event UnityAction OnSaveLoaded;
+
+        private Coroutine saveCoroutine;
 
         public void Init()
         {
@@ -124,28 +127,59 @@ namespace OctoberStudio.Save
 #endif
         }
 
-        public void Save(bool forceSave = false, bool multithreading = false)
+        private IEnumerator SaveCoroutine(bool multithreading = false)
         {
-            if (!forceSave && !IsDirty) return;
-            if (SaveDatabase == null) return;
+            var wait = new WaitForSeconds(0.2f);
+            while (SerializationHelper.IsFileLocked(SAVE_FILE_NAME))
+            {
+                yield return wait;
+            }
+            if (multithreading)
+            {
+                var saveThread = new Thread(() => {
+                    SerializationHelper.SerializePersistent(SaveDatabase, SAVE_FILE_NAME);
+                });
+                saveThread.Start();
+            }
+            else
+            {
+                SerializationHelper.SerializePersistent(SaveDatabase, SAVE_FILE_NAME);
+            }
 
+            Debug.Log("Save file is updated");
+
+            saveCoroutine = null;
+        }
+
+        private void ForceSave()
+        {
+            if (SaveDatabase == null) return;
             SaveDatabase.Flush();
 
 #if UNITY_WEBGL && !UNITY_EDITOR
             WebGLSave(SaveDatabase, SAVE_FILE_NAME);
+            Debug.Log("Save file is updated");
 #else
-            if (multithreading)
-            {
-                Thread saveThread = new Thread(() => SerializationHelper.SerializePersistent(SaveDatabase, SAVE_FILE_NAME));
-                saveThread.Start();
-            } else
+            if (!SerializationHelper.IsFileLocked(SAVE_FILE_NAME))
             {
                 SerializationHelper.SerializePersistent(SaveDatabase, SAVE_FILE_NAME);
+
+                Debug.Log("Save file is updated");
             }
 #endif
-            Debug.Log("Save file is updated");
+        }
 
-            IsDirty = false;
+        public void Save(bool multithreading = false)
+        {
+            if (SaveDatabase == null) return;
+            SaveDatabase.Flush();
+
+#if UNITY_WEBGL && !UNITY_EDITOR
+            WebGLSave(SaveDatabase, SAVE_FILE_NAME);
+            Debug.Log("Save file is updated");
+#else
+            if (saveCoroutine == null) saveCoroutine = StartCoroutine(SaveCoroutine(multithreading));
+#endif
         }
 
 #if UNITY_WEBGL && !UNITY_EDITOR
@@ -157,11 +191,6 @@ namespace OctoberStudio.Save
         }
 #endif
 
-        public void SetDirty()
-        {
-            IsDirty = true;
-        }
-
         private IEnumerator AutoSaveCoroutine()
         {
             var wait = new WaitForSecondsRealtime(autoSaveDelay);
@@ -170,7 +199,7 @@ namespace OctoberStudio.Save
             {
                 yield return wait;
 
-                Save(true, true);
+                Save(true);
             }
         }
 
@@ -188,21 +217,21 @@ namespace OctoberStudio.Save
         private void OnDestroy()
         {
 #if UNITY_EDITOR
-            Save(true, false);
+            ForceSave();
 #endif
         }
 
         private void OnDisable()
         {
 #if UNITY_WEBGL && !UNITY_EDITOR
-            Save(true);
+            ForceSave();
 #endif
         }
 
         private void OnApplicationFocus(bool focus)
         {
 #if !UNITY_EDITOR
-            if(!focus) Save(true);
+            if(!focus) ForceSave();
 #endif
         }
 

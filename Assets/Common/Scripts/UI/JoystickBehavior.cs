@@ -11,6 +11,7 @@ namespace OctoberStudio.UI
         public static JoystickBehavior Instance { get; private set; }
 
         [SerializeField] Canvas canvas;
+        [SerializeField] CanvasGroup canvasGroup;
 
         [Header("Joystick")]
         [SerializeField] Image backgroundImage;
@@ -36,6 +37,8 @@ namespace OctoberStudio.UI
 
         public event UnityAction OnBeingUsed;
 
+        public bool IsEnabled { get; private set; }
+
         private void Awake()
         {
             Instance = this;
@@ -57,6 +60,8 @@ namespace OctoberStudio.UI
             isBeingUsed = false;
 
             defaultAnchoredPosition = backgroundRectTransform.anchoredPosition;
+
+            GameController.InputManager.RegisterJoystick(this);
         }
 
         public void OnPointerDown(PointerEventData eventData)
@@ -119,15 +124,23 @@ namespace OctoberStudio.UI
 
         public void Enable()
         {
-            gameObject.SetActive(true);
+            IsEnabled = true;
+            canvasGroup.alpha = 1;
         }
 
         public void Disable()
         {
-            gameObject.SetActive(false);
+            IsEnabled = false;
+            canvasGroup.alpha = 0;
+
             isBeingUsed = false;
 
             ResetJoystick();
+        }
+
+        private void OnDestroy()
+        {
+            GameController.InputManager.RemoveJoystick();
         }
 
         public void Hide()

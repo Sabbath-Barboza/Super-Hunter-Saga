@@ -2,9 +2,8 @@
 %TAG !u! tag:unity3d.com,2011:
 --- !u!78 &1
 TagManager:
-  serializedVersion: 3
-  tags:
-  - Coin
+  serializedVersion: 2
+  tags: []
   layers:
   - Default
   - TransparentFX
@@ -16,9 +15,9 @@ TagManager:
   - Enemy
   - Player Projectile
   - Enemy Projectile
-  - 
-  - 
-  - 
+  - Player Enemy Collision Helper
+  - Player & Enemy Obstacle
+  - Player Only Obstacle
   - 
   - 
   - 
@@ -42,5 +41,3 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
-  m_RenderingLayers:
-  - Default

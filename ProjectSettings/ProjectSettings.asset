@@ -4,7 +4,7 @@
 PlayerSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 28
-  productGUID: 687953790e9734d4b96a47bc446f74f1
+  productGUID: 090c85f66b5f27345a971630135948f7
   AndroidProfiler: 0
   AndroidFilterTouchesWhenObscured: 0
   AndroidEnableSustainedPerformanceMode: 0
@@ -41,7 +41,7 @@ PlayerSettings:
     height: 1
   m_SplashScreenLogos:
   - logo: {fileID: 21300000, guid: 595ce0b56b597fd418dc476f6decab65, type: 3}
-    duration: 3
+    duration: 2
   - logo: {fileID: 21300000, guid: c9cb0ce0e14e302418f7b369e8492ce5, type: 3}
     duration: 2
   - logo: {fileID: 21300000, guid: c2dda1c9ea751aa49877d2c8745b329a, type: 3}
@@ -146,8 +146,9 @@ PlayerSettings:
   loadStoreDebugModeEnabled: 0
   visionOSBundleVersion: 1.0
   tvOSBundleVersion: 1.0
-  bundleVersion: 1.0
-  preloadedAssets: []
+  bundleVersion: 1.1.0
+  preloadedAssets:
+  - {fileID: -944628639613478452, guid: e3d7cb309cd97cb4998aceb684f33068, type: 3}
   metroInputSource: 0
   wsaTransparentSwapchain: 0
   m_HolographicPauseOnTrackingLoss: 1
@@ -178,7 +179,7 @@ PlayerSettings:
     iPhone: 0
     tvOS: 0
   overrideDefaultApplicationIdentifier: 1
-  AndroidBundleVersionCode: 1
+  AndroidBundleVersionCode: 2
   AndroidMinSdkVersion: 23
   AndroidTargetSdkVersion: 34
   AndroidPreferredInstallLocation: 1
@@ -272,8 +273,8 @@ PlayerSettings:
   AndroidTargetArchitectures: 2
   AndroidSplashScreenScale: 0
   androidSplashScreen: {fileID: 0}
-  AndroidKeystoreName: D:/Sabbath Barboza/Super Hunter Saga/Super Hunter Saga/SHS_KeyStore.keystore
-  AndroidKeyaliasName: super hunter saga
+  AndroidKeystoreName: 
+  AndroidKeyaliasName: 
   AndroidEnableArmv9SecurityFeatures: 0
   AndroidEnableArm64MTE: 0
   AndroidBuildApkPerCpuArchitecture: 0
@@ -282,7 +283,7 @@ PlayerSettings:
   AndroidEnableTango: 0
   androidEnableBanner: 1
   androidUseLowAccuracyLocation: 0
-  androidUseCustomKeystore: 1
+  androidUseCustomKeystore: 0
   m_AndroidBanners:
   - width: 320
     height: 180
@@ -298,7 +299,7 @@ PlayerSettings:
   - m_BuildTarget: 
     m_Icons:
     - serializedVersion: 2
-      m_Icon: {fileID: 2800000, guid: 718a8d8587f44cd4bae720bca8e7ddf5, type: 3}
+      m_Icon: {fileID: 2800000, guid: 784ed0653e9bb6a489deaac187561846, type: 3}
       m_Width: 128
       m_Height: 128
       m_Kind: 0
@@ -860,10 +861,7 @@ PlayerSettings:
   webGLWebAssemblyBigInt: 0
   webGLCloseOnQuit: 0
   webWasm2023: 0
-  scriptingDefineSymbols:
-    Android: 
-    Windows Store Apps: 
-    iPhone: 
+  scriptingDefineSymbols: {}
   additionalCompilerArguments: {}
   platformArchitecture: {}
   scriptingBackend:
@@ -898,14 +896,14 @@ PlayerSettings:
   editorAssembliesCompatibilityLevel: 1
   m_RenderingPath: 1
   m_MobileRenderingPath: 1
-  metroPackageName: SuperHunterSaga
+  metroPackageName: Super-Hunter-Saga
   metroPackageVersion: 1.0.0.0
   metroCertificatePath: 
   metroCertificatePassword: 
   metroCertificateSubject: 
   metroCertificateIssuer: 
   metroCertificateNotAfter: 0000000000000000
-  metroApplicationDescription: Super Hunter Saga
+  metroApplicationDescription: Super-Hunter-Saga
   wsaImages: {}
   metroTileShortName: Super Hunter Saga
   metroTileShowName: 0

@@ -34,6 +34,6 @@ AssetOrigin:
   serializedVersion: 1
   productId: 304936
   packageName: Monster Survivors - Full Game
-  packageVersion: 1.0.1
+  packageVersion: 1.0.2
   assetPath: Assets/Common/Scripts/Toolkit/Save/Plugins/WebGL/webgLibrary.jslib
-  uploadId: 726958
+  uploadId: 728543

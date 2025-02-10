@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace OctoberStudio
 {
-    public class EndlessFieldBehavior : IFieldBehavior
+    public class EndlessFieldBehavior : AbstractFieldBehavior
     {
         private PoolComponent<StageChunkBehavior> pool;
 
@@ -15,8 +15,10 @@ namespace OctoberStudio
 
         bool wait = false;
 
-        public void Init(StageFieldData stageFieldData)
+        public override void Init(StageFieldData stageFieldData, bool spawnProp)
         {
+            base.Init(stageFieldData, spawnProp);
+
             pool = new PoolComponent<StageChunkBehavior>("Background", stageFieldData.BackgroundPrefab, 9);
 
             var row = new List<StageChunkBehavior>();
@@ -31,10 +33,9 @@ namespace OctoberStudio
 
             wait = false;
             EasingManager.DoNextFrame().SetOnFinish(() => wait = true);
-
         }
 
-        public void Update()
+        public override void Update()
         {
             if (!wait) return;
 
@@ -69,6 +70,8 @@ namespace OctoberStudio
                     chunk.transform.rotation = Quaternion.identity;
                     chunk.transform.localScale = Vector3.one;
 
+                    SpawnProp(chunk);
+
                     newTopRow.Add(chunk);
                 }
 
@@ -93,6 +96,8 @@ namespace OctoberStudio
                     chunk.transform.rotation = Quaternion.identity;
                     chunk.transform.localScale = Vector3.one;
 
+                    SpawnProp(chunk);
+
                     newBottomRow.Add(chunk);
                 }
 
@@ -115,6 +120,8 @@ namespace OctoberStudio
                     chunk.transform.rotation = Quaternion.identity;
                     chunk.transform.localScale = Vector3.one;
 
+                    SpawnProp(chunk);
+
                     row.Insert(0, chunk);
                 }
             }
@@ -134,6 +141,8 @@ namespace OctoberStudio
                     chunk.transform.position = chunkOnLeft.transform.position + Vector3.right * chunk.Size.x;
                     chunk.transform.rotation = Quaternion.identity;
                     chunk.transform.localScale = Vector3.one;
+
+                    SpawnProp(chunk);
 
                     row.Add(chunk);
                 }
@@ -206,7 +215,7 @@ namespace OctoberStudio
             {
                 var chunk = topRow[i];
 
-                chunk.gameObject.SetActive(false);
+                chunk.Clear();
             }
 
             topRow.Clear();
@@ -219,7 +228,7 @@ namespace OctoberStudio
             {
                 var row = chunks[i];
 
-                row[0].gameObject.SetActive(false);
+                row[0].Clear();
                 row.RemoveAt(0);
             }
         }
@@ -230,7 +239,7 @@ namespace OctoberStudio
             {
                 var row = chunks[i];
 
-                row[^1].gameObject.SetActive(false);
+                row[^1].Clear();
                 row.RemoveAt(row.Count - 1);
             }
         }
@@ -243,7 +252,7 @@ namespace OctoberStudio
             {
                 var chunk = bottomRow[i];
 
-                chunk.gameObject.SetActive(false);
+                chunk.Clear();
             }
 
             bottomRow.Clear();
@@ -252,41 +261,52 @@ namespace OctoberStudio
 
         #endregion
 
-        public bool ValidatePosition(Vector2 position) => true;
+        public override bool ValidatePosition(Vector2 position) => true;
 
-        public Vector2 GetRandomPositionOnBorder() => Vector2.zero;
+        public override Vector2 GetRandomPositionOnBorder() => Vector2.zero;
 
-        public Vector2 GetBossSpawnPosition(BossFenceBehavior fence, Vector2 offset)
+        public override Vector2 GetBossSpawnPosition(BossFenceBehavior fence, Vector2 offset)
         {
             var playerPosition = PlayerBehavior.Player.transform.position.XY();
             return playerPosition + offset;
         }
 
-        public bool IsPointOutsideRight(Vector2 point, out float distance)
+        public override bool IsPointOutsideRight(Vector2 point, out float distance)
         {
             distance = 0;
             return false;
         }
 
-        public bool IsPointOutsideLeft(Vector2 point, out float distance)
+        public override bool IsPointOutsideLeft(Vector2 point, out float distance)
         {
             distance = 0;
             return false;
         }
 
-        public bool IsPointOutsideTop(Vector2 point, out float distance)
+        public override bool IsPointOutsideTop(Vector2 point, out float distance)
         {
             distance = 0;
             return false;
         }
 
-        public bool IsPointOutsideBottom(Vector2 point, out float distance)
+        public override bool IsPointOutsideBottom(Vector2 point, out float distance)
         {
             distance = 0;
             return false;
         }
 
-        public void Clear()
+        public override void RemovePropFromBossFence(BossFenceBehavior fence)
+        {
+            for (int i = 0; i < chunks.Count; i++)
+            {
+                for(int j = 0; j < chunks[i].Count; j++)
+                {
+                    chunks[i][j].RemovePropFromBossFence(fence);
+                }
+            }
+        }
+
+        public override void Clear()
         {
             pool.Destroy();
         }

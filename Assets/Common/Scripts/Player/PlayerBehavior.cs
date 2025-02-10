@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.TextCore.Text;
 
 namespace OctoberStudio
 {
@@ -32,9 +33,9 @@ namespace OctoberStudio
         [SerializeField, Min(1f)] float initialGoldMultiplier = 1;
 
         [Header("References")]
-        [SerializeField] JoystickBehavior joystick;
         [SerializeField] HealthbarBehavior healthbar;
         [SerializeField] Transform centerPoint;
+        [SerializeField] PlayerEnemyCollisionHelper collisionHelper;
 
         public static Transform CenterTransform => instance.centerPoint;
         public static Vector2 CenterPosition => instance.centerPoint.position;
@@ -81,7 +82,7 @@ namespace OctoberStudio
         private List<EnemyBehavior> enemiesInside = new List<EnemyBehavior>();
 
         private CharactersSave charactersSave;
-        private CharacterData Data { get; set; }
+        public CharacterData Data { get; set; }
         private CharacterBehavior Character { get; set; }
 
         private void Awake()
@@ -130,12 +131,14 @@ namespace OctoberStudio
 
             if (!IsMovingAlowed) return;
 
-            float joysticPower = joystick.Value.magnitude;
+            var input = GameController.InputManager.MovementValue;
+
+            float joysticPower = input.magnitude;
             Character.SetSpeed(joysticPower);
 
-            if (!Mathf.Approximately(joysticPower, 0))
+            if (!Mathf.Approximately(joysticPower, 0) && Time.timeScale > 0)
             {
-                var frameMovement = joystick.Value * Time.deltaTime * Speed;
+                var frameMovement = input * Time.deltaTime * Speed;
 
                 if (StageController.FieldManager.ValidatePosition(transform.position + Vector3.right * frameMovement.x, fenceOffset))
                 {
@@ -146,9 +149,12 @@ namespace OctoberStudio
                 {
                     transform.position += Vector3.up * frameMovement.y;
                 }
-                Character.SetLocalScale(new Vector3(joystick.Value.x > 0 ? 1 : -1, 1, 1));
 
-                LookDirection = joystick.Value.normalized;
+                collisionHelper.transform.localPosition = Vector3.zero;
+
+                Character.SetLocalScale(new Vector3(input.x > 0 ? 1 : -1, 1, 1));
+
+                LookDirection = input.normalized;
             }
         }
 
@@ -256,7 +262,8 @@ namespace OctoberStudio
 
             EasingManager.DoAfter(3, () => invincible = false);
         }
-        private void OnTriggerEnter2D(Collider2D collision)
+
+        public void CheckTriggerEnter2D(Collider2D collision)
         {
             if (collision.gameObject.layer == 7)
             {
@@ -285,7 +292,7 @@ namespace OctoberStudio
             }
         }
 
-        private void OnTriggerExit2D(Collider2D collision)
+        public void CheckTriggerExit2D(Collider2D collision)
         {
             if (collision.gameObject.layer == 7)
             {

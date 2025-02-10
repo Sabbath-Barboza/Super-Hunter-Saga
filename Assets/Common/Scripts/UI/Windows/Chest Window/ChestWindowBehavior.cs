@@ -1,10 +1,13 @@
 using OctoberStudio.Abilities;
 using OctoberStudio.Audio;
 using OctoberStudio.Easing;
+using OctoberStudio.Input;
 using OctoberStudio.UI.Chest;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 namespace OctoberStudio.UI
@@ -65,6 +68,8 @@ namespace OctoberStudio.UI
         private float cacheMusicVolume;
         private AudioSource chestSound;
 
+        public event UnityAction OnClosed;
+
         private void Awake()
         {
             takeButton.onClick.AddListener(TakeButton);
@@ -76,7 +81,7 @@ namespace OctoberStudio.UI
 
         private void Start()
         {
-            takeButton.enabled = false;
+            takeButton.interactable = false;
         }
 
         public void OpenWindow(int tierId, List<AbilityData> abilities, List<AbilityData> selectedAbilities)
@@ -85,6 +90,7 @@ namespace OctoberStudio.UI
             GameController.Music.DoVolume(0, 0.3f).SetUnscaledTime(true);
 
             backgroundButton.gameObject.SetActive(true);
+            EventSystem.current.SetSelectedGameObject(backgroundButton.gameObject);
 
             windowRect.anchoredPosition = closedPosition;
 
@@ -112,7 +118,9 @@ namespace OctoberStudio.UI
             IsAnimationPlaying = true;
 
             takeButton.gameObject.SetActive(false);
-            takeButton.enabled = false;
+            takeButton.interactable = false;
+
+            GameController.InputManager.onInputChanged += OnInputChanged;
 
             GameController.AudioManager.PlaySound(CHEST_WINDOW_POPUP_HASH);
         }
@@ -155,7 +163,11 @@ namespace OctoberStudio.UI
 
             takeButton.gameObject.SetActive(true);
             takeButtonCanvasGroup.alpha = 0;
-            takeButtonCoroutine = takeButtonCanvasGroup.DoAlpha(1, 0.3f).SetUnscaledTime(true).SetOnFinish(() => takeButton.enabled = true);
+            takeButtonCoroutine = takeButtonCanvasGroup.DoAlpha(1, 0.3f).SetUnscaledTime(true).SetOnFinish(() => 
+            { 
+                takeButton.interactable = true;
+                EventSystem.current.SetSelectedGameObject(takeButton.gameObject);
+            });
         }
 
         private void SkipAnimationButton()
@@ -184,7 +196,9 @@ namespace OctoberStudio.UI
 
                 takeButton.gameObject.SetActive(true);
                 takeButtonCanvasGroup.alpha = 1;
-                takeButton.enabled = true;
+                takeButton.interactable = true;
+
+                EventSystem.current.SetSelectedGameObject(takeButton.gameObject);
 
                 chestSound.DoVolume(0f, 0.2f).SetUnscaledTime(true).SetOnFinish(() => chestSound.Stop());
             }
@@ -207,7 +221,26 @@ namespace OctoberStudio.UI
             {
                 Time.timeScale = 1;
                 backgroundButton.gameObject.SetActive(false);
+
+                OnClosed?.Invoke();
             });
+
+            GameController.InputManager.onInputChanged -= OnInputChanged;
+        }
+
+        private void OnInputChanged(InputType prevInput, InputType inputType)
+        {
+            if (prevInput == InputType.UIJoystick)
+            {
+                if (IsAnimationPlaying)
+                {
+                    EventSystem.current.SetSelectedGameObject(backgroundButton.gameObject);
+                } else
+                {
+                    EventSystem.current.SetSelectedGameObject(takeButton.gameObject);
+                }
+                
+            }
         }
     }
 }

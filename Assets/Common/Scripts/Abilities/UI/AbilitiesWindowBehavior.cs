@@ -1,9 +1,12 @@
 using OctoberStudio.Easing;
 using OctoberStudio.Extensions;
+using OctoberStudio.Input;
 using OctoberStudio.Pool;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 namespace OctoberStudio.Abilities.UI
 {
@@ -49,6 +52,7 @@ namespace OctoberStudio.Abilities.UI
                 card.transform.SetParent(null);
                 card.gameObject.SetActive(false);
             }
+            cards.Clear();
 
             for (int i = 0; i < abilities.Count; i++)
             {
@@ -56,6 +60,7 @@ namespace OctoberStudio.Abilities.UI
 
                 card.transform.SetParent(abilitiesHolder);
                 card.transform.ResetLocal();
+                card.transform.SetAsLastSibling();
 
                 card.Init(OnAbilitySelected);
 
@@ -82,6 +87,23 @@ namespace OctoberStudio.Abilities.UI
             {
                 cards[i].Show(i * 0.1f + 0.15f);
             }
+
+            EasingManager.DoNextFrame(() => {
+                for (int i = 0; i < cards.Count; i++)
+                {
+                    var navigation = new Navigation();
+                    navigation.mode = Navigation.Mode.Explicit;
+
+                    if (i != 0) navigation.selectOnUp = cards[i - 1].Selectable;
+                    if (i != cards.Count - 1) navigation.selectOnDown = cards[i + 1].Selectable;
+
+                    cards[i].Selectable.navigation = navigation;
+                }
+
+                EventSystem.current.SetSelectedGameObject(cards[0].gameObject);
+            });
+
+            GameController.InputManager.onInputChanged += OnInputChanged;
         }
 
         public void Hide()
@@ -92,13 +114,27 @@ namespace OctoberStudio.Abilities.UI
             panelCoroutine = panelRect.DoAnchorPosition(panelHiddenPosition, 0.3f).SetEasing(EasingType.SineIn).SetUnscaledTime(true).SetOnFinish(() => {
                 Time.timeScale = 1;
 
-                gameObject.SetActive(false);
-
-                cards.ForEach((card) => card.transform.SetParent(null));
+                for(int i = 0; i < cards.Count; i++)
+                {
+                    cards[i].transform.SetParent(null);
+                    cards[i].gameObject.SetActive(false);
+                }
                 cards.Clear();
 
+                gameObject.SetActive(false);
+
                 onPanelClosed?.Invoke();
-            });            
+            });
+
+            GameController.InputManager.onInputChanged -= OnInputChanged;
+        }
+
+        private void OnInputChanged(InputType prevInput, InputType inputType)
+        {
+            if (prevInput == InputType.UIJoystick)
+            {
+                EventSystem.current.SetSelectedGameObject(cards[0].gameObject);
+            }
         }
 
         private void OnAbilitySelected(AbilityData ability)

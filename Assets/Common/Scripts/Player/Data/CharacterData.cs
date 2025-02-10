@@ -20,6 +20,13 @@ namespace OctoberStudio
         public GameObject Prefab => prefab;
 
         [Space]
+        [SerializeField] bool hasStartingAbility = false;
+        public bool HasStartingAbility => hasStartingAbility;
+
+        [SerializeField] AbilityType startingAbility;
+        public AbilityType StartingAbility => startingAbility;
+
+        [Space]
         [SerializeField, Min(1)] float baseHP;
         public float BaseHP => baseHP;
 

@@ -1,9 +1,12 @@
 using OctoberStudio.Audio;
 using OctoberStudio.Easing;
+using OctoberStudio.Input;
 using OctoberStudio.Save;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.EventSystems;
+using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
 namespace OctoberStudio.UI
@@ -36,16 +39,10 @@ namespace OctoberStudio.UI
         [SerializeField] Button confirmButton;
         [SerializeField] Button cancelButton;
 
-        private Canvas canvas;
-
         private StageSave save;
-
-        private int previousSavedId;
 
         private void Awake()
         {
-            canvas = GetComponent<Canvas>();
-
             playButton.onClick.AddListener(OnPlayButtonClicked);
             leftButton.onClick.AddListener(DecrementSelectedStageId);
             rightButton.onClick.AddListener(IncremenSelectedStageId);
@@ -62,13 +59,21 @@ namespace OctoberStudio.UI
 
             if (save.IsPlaying && GameController.FirstTimeLoaded)
             {
-                previousSavedId = save.SelectedStageId;
                 continueBackgroundImage.gameObject.SetActive(true);
 
                 contituePopupRect.gameObject.SetActive(true);
+
+                EventSystem.current.SetSelectedGameObject(confirmButton.gameObject);
+
+                InitStage(save.SelectedStageId);
+            } else
+            {
+                EventSystem.current.SetSelectedGameObject(playButton.gameObject);
+                save.SetSelectedStageId(save.MaxReachedStageId);
             }
 
-            save.SetSelectedStageId(save.MaxReachedStageId);
+            GameController.InputManager.onInputChanged += OnInputChanged;
+            GameController.InputManager.InputAsset.UI.Settings.performed += OnSettingsInputClicked;
         }
 
         public void Init(UnityAction onUpgradesButtonClicked, UnityAction onSettingsButtonClicked, UnityAction onCharactersButtonClicked)
@@ -89,12 +94,12 @@ namespace OctoberStudio.UI
             if(save.SelectedStageId > save.MaxReachedStageId)
             {
                 lockImage.gameObject.SetActive(true);
-                playButton.enabled = false;
+                playButton.interactable = false;
                 playButton.image.sprite = playButtonDisabledSprite;
             } else
             {
                 lockImage.gameObject.SetActive(false);
-                playButton.enabled = true;
+                playButton.interactable = true;
                 playButton.image.sprite = playButtonEnabledSprite;
             }
 
@@ -104,12 +109,19 @@ namespace OctoberStudio.UI
 
         public void Open()
         {
-            canvas.enabled = true;
+            gameObject.SetActive(true);
+            EasingManager.DoNextFrame(() => EventSystem.current.SetSelectedGameObject(playButton.gameObject));
+
+            GameController.InputManager.onInputChanged += OnInputChanged;
+            GameController.InputManager.InputAsset.UI.Settings.performed += OnSettingsInputClicked;
         }
 
         public void Close()
         {
-            canvas.enabled = false;
+            gameObject.SetActive(false);
+
+            GameController.InputManager.onInputChanged -= OnInputChanged;
+            GameController.InputManager.InputAsset.UI.Settings.performed -= OnSettingsInputClicked;
         }
 
         public void OnPlayButtonClicked()
@@ -126,17 +138,46 @@ namespace OctoberStudio.UI
         {
             GameController.AudioManager.PlaySound(AudioManager.BUTTON_CLICK_HASH);
             save.SetSelectedStageId(save.SelectedStageId + 1);
+
+            if (!rightButton.gameObject.activeSelf)
+            {
+                if (leftButton.gameObject.activeSelf)
+                {
+                    EventSystem.current.SetSelectedGameObject(leftButton.gameObject);
+                } else
+                {
+                    EventSystem.current.SetSelectedGameObject(playButton.gameObject);
+                }
+            }
         }
 
         private void DecrementSelectedStageId()
         {
             GameController.AudioManager.PlaySound(AudioManager.BUTTON_CLICK_HASH);
             save.SetSelectedStageId(save.SelectedStageId - 1);
+
+            if (!leftButton.gameObject.activeSelf)
+            {
+                if (rightButton.gameObject.activeSelf)
+                {
+                    EventSystem.current.SetSelectedGameObject(rightButton.gameObject);
+                }
+                else
+                {
+                    EventSystem.current.SetSelectedGameObject(playButton.gameObject);
+                }
+            }
         }
 
         private void OnDestroy()
         {
             save.onSelectedStageChanged -= InitStage;
+            GameController.InputManager.onInputChanged -= OnInputChanged;
+        }
+
+        private void OnSettingsInputClicked(InputAction.CallbackContext context)
+        {
+            settingsButton.onClick?.Invoke();
         }
 
         private void ConfirmButtonClicked()
@@ -153,6 +194,23 @@ namespace OctoberStudio.UI
 
             continueBackgroundImage.DoAlpha(0, 0.3f).SetOnFinish(() => continueBackgroundImage.gameObject.SetActive(false));
             contituePopupRect.DoAnchorPosition(Vector2.down * 2500, 0.3f).SetEasing(EasingType.SineIn).SetOnFinish(() => contituePopupRect.gameObject.SetActive(false));
+
+            EventSystem.current.SetSelectedGameObject(playButton.gameObject);
+        }
+
+        private void OnInputChanged(InputType prevInputType, InputType inputType)
+        {
+            if(prevInputType == InputType.UIJoystick)
+            {
+                if (continueBackgroundImage.gameObject.activeSelf)
+                {
+                    EventSystem.current.SetSelectedGameObject(confirmButton.gameObject);
+                }
+                else
+                {
+                    EventSystem.current.SetSelectedGameObject(playButton.gameObject);
+                }
+            }
         }
     }
 }

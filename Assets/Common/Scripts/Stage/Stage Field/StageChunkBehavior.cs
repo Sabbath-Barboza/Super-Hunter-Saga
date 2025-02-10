@@ -21,10 +21,31 @@ namespace OctoberStudio
         public bool HasEmptyBottom => BottomBound > CameraManager.BottomBound;
 
         private List<Transform> borders = new List<Transform>();
-            
+        private List<PropBehavior> prop = new List<PropBehavior>();    
+
         public void AddBorder(Transform border)
         {
             borders.Add(border);
+        }
+
+        public void AddProp(PropBehavior propObject)
+        {
+            prop.Add(propObject);
+
+            propObject.transform.position = new Vector3(Random.Range(LeftBound, RightBound), Random.Range(BottomBound, TopBound), 0);
+        }
+
+        public void RemovePropFromBossFence(BossFenceBehavior fence)
+        {
+            for(int i = 0; i < prop.Count; i++)
+            {
+                if (fence.ValidatePosition(prop[i].transform.position, Vector2.zero))
+                {
+                    prop[i].Dissolve();
+                    prop.RemoveAt(i);
+                    i--;
+                }
+            }
         }
 
         public void Clear()
@@ -34,7 +55,13 @@ namespace OctoberStudio
                 borders[i].gameObject.SetActive(false);
             }
 
+            for(int i = 0; i < prop.Count; i++)
+            {
+                prop[i].gameObject.SetActive(false);
+            }
+
             borders.Clear();
+            prop.Clear();
 
             gameObject.SetActive(false);
         }

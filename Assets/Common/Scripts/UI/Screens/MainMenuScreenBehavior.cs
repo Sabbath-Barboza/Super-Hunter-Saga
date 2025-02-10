@@ -1,4 +1,5 @@
 using OctoberStudio.Audio;
+using OctoberStudio.Easing;
 using OctoberStudio.Upgrades.UI;
 using UnityEngine;
 using UnityEngine.Events;
@@ -75,18 +76,10 @@ namespace OctoberStudio.UI
             lobbyWindow.Open();
         }
 
-        public void Show(UnityAction onFinish = null)
+        private void OnDestroy()
         {
-            canvas.enabled = true;
-
-            onFinish?.Invoke();
-        }
-
-        public void Hide(UnityAction onFinish = null)
-        {
-            canvas.enabled = false;
-
-            onFinish?.Invoke();
+            charactersWindow.Clear();
+            upgradesWindow.Clear();
         }
     }
 }

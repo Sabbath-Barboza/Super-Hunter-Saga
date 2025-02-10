@@ -559,6 +559,7 @@ GameObject:
   - component: {fileID: 4429865790771794334}
   - component: {fileID: 2206383610526493467}
   - component: {fileID: 2329126949919117575}
+  - component: {fileID: 4919033623470831707}
   m_Layer: 5
   m_Name: Take Button
   m_TagString: Untagged
@@ -637,7 +638,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
-    m_Mode: 3
+    m_Mode: 0
     m_WrapAround: 0
     m_SelectOnUp: {fileID: 0}
     m_SelectOnDown: {fileID: 0}
@@ -680,6 +681,18 @@ CanvasGroup:
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
+--- !u!114 &4919033623470831707
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5614923809241973877}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f77d53b2513e6df4f9ebdc533a064ec4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6241778990222434892
 GameObject:
   m_ObjectHideFlags: 0
@@ -699,7 +712,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &7292278012371291372
 RectTransform:
   m_ObjectHideFlags: 0
@@ -829,6 +842,9 @@ MonoBehaviour:
   backgroundButton: {fileID: 7771814785937564790}
   takeButton: {fileID: 2206383610526493467}
   takeButtonCanvasGroup: {fileID: 2329126949919117575}
+  baseRewardAmount: 100
+  tierRewardAmount: 50
+  randomRewardAmount: 50
   linesAnimationDuration: 5
   abilityAppearDelay: 0.2
   colorsTier1:

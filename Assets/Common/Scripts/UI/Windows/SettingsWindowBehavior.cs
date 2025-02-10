@@ -1,26 +1,22 @@
 using OctoberStudio.Easing;
-using System.Collections.Generic;
+using OctoberStudio.Input;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
 namespace OctoberStudio.UI
 {
     public class SettingsWindowBehavior : MonoBehaviour
     {
-        private Canvas canvas;
-
         [SerializeField] ToggleBehavior soundToggle;
         [SerializeField] ToggleBehavior musicToggle;
         [SerializeField] ToggleBehavior vibrationToggle;
 
         [Space]
         [SerializeField] Button backButton;
-
-        private void Awake()
-        {
-            canvas = GetComponent<Canvas>();
-        }
+        [SerializeField] Button exitButton;
 
         private void Start()
         {
@@ -41,16 +37,53 @@ namespace OctoberStudio.UI
         public void Init(UnityAction onBackButtonClicked)
         {
             backButton.onClick.AddListener(onBackButtonClicked);
+
+#if (UNITY_IOS || UNITY_ANDROID || UNITY_WEBGL) && !UNITY_EDITOR
+            exitButton.gameObject.SetActive(false);
+#else
+            exitButton.gameObject.SetActive(true);
+            exitButton.onClick.AddListener(OnExitButtonClicked);
+#endif
         }
 
         public void Open()
         {
-            canvas.enabled = true;
+            gameObject.SetActive(true);
+            EasingManager.DoNextFrame(() => {
+                soundToggle.Select();
+                GameController.InputManager.InputAsset.UI.Back.performed += OnBackInputClicked;
+            });
+            GameController.InputManager.onInputChanged += OnInputChanged;
         }
 
         public void Close()
         {
-            canvas.enabled = false;
+            gameObject.SetActive(false);
+
+            GameController.InputManager.InputAsset.UI.Back.performed -= OnBackInputClicked;
+            GameController.InputManager.onInputChanged -= OnInputChanged;
+        }
+
+        private void OnBackInputClicked(InputAction.CallbackContext context)
+        {
+            backButton.onClick?.Invoke();
+        }
+
+        private void OnInputChanged(InputType prevInput, InputType inputType)
+        {
+            if (prevInput == InputType.UIJoystick)
+            {
+                EasingManager.DoNextFrame(soundToggle.Select);
+            }
+        }
+
+        private void OnExitButtonClicked()
+        {
+#if UNITY_EDITOR
+            EditorApplication.isPlaying = false;
+#else
+            Application.Quit();
+#endif
         }
     }
 }

@@ -28,6 +28,7 @@ namespace OctoberStudio.Abilities.UI
 
         [Space]
         [SerializeField] Button button;
+        public Selectable Selectable => button;
 
         [Space]
         [SerializeField] RectTransform shineRect;
@@ -106,6 +107,7 @@ namespace OctoberStudio.Abilities.UI
             var targetShinePosition = shineStartPosition;
             targetShinePosition.x *= -1;
 
+            shineRect.anchoredPosition = shineStartPosition;
             shineRect.DoAnchorPosition(targetShinePosition, 0.5f, delay).SetUnscaledTime(true);
         }
 

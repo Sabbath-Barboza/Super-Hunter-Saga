@@ -6,7 +6,7 @@ namespace OctoberStudio
 {
     public interface IFieldBehavior
     {
-        void Init(StageFieldData stageFieldData);
+        void Init(StageFieldData stageFieldData, bool spawnProp);
         void Update();
         void Clear();
 
@@ -18,5 +18,7 @@ namespace OctoberStudio
         bool IsPointOutsideLeft(Vector2 point, out float distance);
         bool IsPointOutsideTop(Vector2 point, out float distance);
         bool IsPointOutsideBottom(Vector2 point, out float distance);
+
+        void RemovePropFromBossFence(BossFenceBehavior fence);
     }
 }

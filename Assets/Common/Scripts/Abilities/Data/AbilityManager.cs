@@ -11,8 +11,6 @@ namespace OctoberStudio.Abilities
     public class AbilityManager : MonoBehaviour
     {
         [SerializeField] AbilitiesDatabase abilitiesDatabase;
-        [SerializeField] AbilitiesWindowBehavior abilitiesWindow;
-        [SerializeField] ChestWindowBehavior chestWindow;
 
         [Space]
         [SerializeField, Range(0, 1)] float chestChanceTier5;
@@ -33,11 +31,9 @@ namespace OctoberStudio.Abilities
 
             stageSave = GameController.SaveManager.GetSave<StageSave>("Stage");
             if(stageSave.ResetStageData) save.Clear();
-
-            abilitiesWindow.Init();
         }
 
-        public void Init(PresetData testingPreset)
+        public void Init(PresetData testingPreset, CharacterData characterData)
         {
             StageController.ExperienceManager.onXpLevelChanged += OnXpLevelChanged;
 
@@ -63,12 +59,25 @@ namespace OctoberStudio.Abilities
 
                 if(savedAbilities.Count == 0)
                 {
-                    EasingManager.DoAfter(0.3f, ShowWeaponSelectScreen);
+                    if (characterData.HasStartingAbility)
+                    {
+                        AbilityData data = abilitiesDatabase.GetAbility(characterData.StartingAbility);
+                        AddAbility(data, 0);
+                    } else
+                    {
+                        EasingManager.DoAfter(0.3f, ShowWeaponSelectScreen);
+                    }
+                    
                 }
-            } else 
+            } else if (characterData.HasStartingAbility)
+            {
+                AbilityData data = abilitiesDatabase.GetAbility(characterData.StartingAbility);
+                AddAbility(data, 0);
+            }
+            else
             {
                 EasingManager.DoAfter(0.3f, ShowWeaponSelectScreen);
-            }           
+            }
         }
 
         public void AddAbility(AbilityData abilityData, int level = 0)
@@ -147,9 +156,7 @@ namespace OctoberStudio.Abilities
 
             if (selectedAbilities.Count > 0)
             {
-                abilitiesWindow.SetData(selectedAbilities);
-
-                StageController.GameScreen.ShowAbilitiesPanel(false);
+                StageController.GameScreen.ShowAbilitiesPanel(selectedAbilities, false);
             }
         }
 
@@ -233,9 +240,7 @@ namespace OctoberStudio.Abilities
 
             if(selectedAbilities.Count > 0)
             {
-                abilitiesWindow.SetData(selectedAbilities);
-
-                StageController.GameScreen.ShowAbilitiesPanel(true);
+                StageController.GameScreen.ShowAbilitiesPanel(selectedAbilities, true);
             }
         }
 
@@ -533,8 +538,7 @@ namespace OctoberStudio.Abilities
                     i--;
                 }
             }
-
-            chestWindow.OpenWindow(tierId, availableAbilities, selectedAbilities);
+            StageController.GameScreen.ShowChestWindow(tierId, availableAbilities, selectedAbilities);
 
             // Applying abilities
             foreach (var ability in selectedAbilities)

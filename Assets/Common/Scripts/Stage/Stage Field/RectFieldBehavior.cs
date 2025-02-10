@@ -4,14 +4,16 @@ using UnityEngine;
 
 namespace OctoberStudio
 {
-    public class RectFieldBehavior : IFieldBehavior
+    public class RectFieldBehavior : AbstractFieldBehavior
     {
         StageChunkBehavior chunk;
 
         List<Transform> borders = new List<Transform>();
 
-        public void Init(StageFieldData stageFieldData)
+        public override void Init(StageFieldData stageFieldData, bool spawnProp)
         {
+            base.Init(stageFieldData, spawnProp);
+
             chunk = Object.Instantiate(stageFieldData.BackgroundPrefab).GetComponent<StageChunkBehavior>();
 
             chunk.transform.position = Vector3.zero;
@@ -72,15 +74,17 @@ namespace OctoberStudio
                 var bottomRightCorner = Object.Instantiate(stageFieldData.BottomRightPrefab).GetComponent<Transform>();
                 bottomRightCorner.transform.position = new Vector2(chunk.Size.x, -chunk.Size.y);
                 borders.Add(bottomRightCorner);
-            }   
+            }
+
+            SpawnProp(chunk);
         }
 
-        public void Update()
+        public override void Update()
         {
 
         }
 
-        public bool ValidatePosition(Vector2 position)
+        public override bool ValidatePosition(Vector2 position)
         {
             if (position.x > chunk.transform.position.x + chunk.Size.x / 2) return false;
             if (position.x < chunk.transform.position.x - chunk.Size.x / 2) return false;
@@ -91,7 +95,7 @@ namespace OctoberStudio
             return true;
         }
 
-        public Vector2 GetRandomPositionOnBorder()
+        public override Vector2 GetRandomPositionOnBorder()
         {
             Vector2 randomPoint = Random.insideUnitCircle.normalized * Mathf.Max(chunk.Size.x, chunk.Size.y);
 
@@ -104,7 +108,7 @@ namespace OctoberStudio
             return randomPoint + chunk.transform.position.XY();
         }
 
-        public Vector2 GetBossSpawnPosition(BossFenceBehavior fence, Vector2 offset)
+        public override Vector2 GetBossSpawnPosition(BossFenceBehavior fence, Vector2 offset)
         {
             if (fence is CircleFenceBehavior circleFence)
             {
@@ -119,35 +123,40 @@ namespace OctoberStudio
             return Vector2.zero;
         }
 
-        public bool IsPointOutsideRight(Vector2 point, out float distance)
+        public override bool IsPointOutsideRight(Vector2 point, out float distance)
         {
             bool result = point.x > chunk.RightBound;
             distance = result ? point.x - chunk.RightBound : 0;
             return result;
         }
 
-        public bool IsPointOutsideLeft(Vector2 point, out float distance)
+        public override bool IsPointOutsideLeft(Vector2 point, out float distance)
         {
             bool result = point.x < chunk.LeftBound;
             distance = result ? chunk.LeftBound - point.x : 0;
             return result;
         }
 
-        public bool IsPointOutsideTop(Vector2 point, out float distance)
+        public override bool IsPointOutsideTop(Vector2 point, out float distance)
         {
             bool result = point.y > chunk.TopBound;
             distance = result ? point.y - chunk.TopBound : 0;
             return result;
         }
 
-        public bool IsPointOutsideBottom(Vector2 point, out float distance)
+        public override bool IsPointOutsideBottom(Vector2 point, out float distance)
         {
             bool result = point.y < chunk.BottomBound;
             distance = result ? chunk.BottomBound - point.y : 0;
             return result;
         }
 
-        public void Clear()
+        public override void RemovePropFromBossFence(BossFenceBehavior fence)
+        {
+            chunk.RemovePropFromBossFence(fence);
+        }
+
+        public override void Clear()
         {
             Object.Destroy(chunk.gameObject);
 

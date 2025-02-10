@@ -1,15 +1,23 @@
+using OctoberStudio.Abilities;
 using OctoberStudio.Audio;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Events;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 namespace OctoberStudio.UI
 {
     public class CharacterItemBehavior : MonoBehaviour
     {
+        [SerializeField] RectTransform rect;
+        public RectTransform Rect => rect;
+
         [Header("Info")]
         [SerializeField] Image iconImage;
         [SerializeField] TMP_Text titleLabel;
+        [SerializeField] GameObject startingAbilityObject;
+        [SerializeField] Image startingAbilityImage;
 
         [Header("Button")]
         [SerializeField] Button upgradeButton;
@@ -28,15 +36,21 @@ namespace OctoberStudio.UI
         public CurrencySave GoldCurrency { get; private set; }
         private CharactersSave charactersSave;
 
+        public Selectable Selectable => upgradeButton;
+
         public CharacterData Data { get; private set; }
         public int CharacterId { get; private set; }
+
+        public bool IsSelected { get; private set; }
+
+        public UnityAction<CharacterItemBehavior> onNavigationSelected;
 
         private void Start()
         {
             upgradeButton.onClick.AddListener(SelectButtonClick);
         }
 
-        public void Init(int id, CharacterData characterData)
+        public void Init(int id, CharacterData characterData, AbilitiesDatabase database)
         {
             if(charactersSave == null)
             {
@@ -47,7 +61,15 @@ namespace OctoberStudio.UI
             if (GoldCurrency == null)
             {
                 GoldCurrency = GameController.SaveManager.GetSave<CurrencySave>("gold");
-                GoldCurrency.OnGoldAmountChanged += OnGoldAmountChanged;
+                GoldCurrency.onGoldAmountChanged += OnGoldAmountChanged;
+            }
+
+            startingAbilityObject.SetActive(characterData.HasStartingAbility);
+
+            if(characterData.HasStartingAbility)
+            {
+                var abilityData = database.GetAbility(characterData.StartingAbility);
+                startingAbilityImage.sprite = abilityData.Icon;
             }
 
             Data = characterData;
@@ -76,14 +98,14 @@ namespace OctoberStudio.UI
 
                 if(charactersSave.SelectedCharacterId == CharacterId)
                 {
-                    upgradeButton.enabled = false;
+                    upgradeButton.interactable = false;
                     upgradeButton.image.sprite = selectedButtonSprite;
 
                     buttonText.text = "SELECTED";
 
                 } else
                 {
-                    upgradeButton.enabled = true;
+                    upgradeButton.interactable = true;
                     upgradeButton.image.sprite = enabledButtonSprite;
 
                     buttonText.text = "SELECT";
@@ -98,12 +120,12 @@ namespace OctoberStudio.UI
 
                 if (GoldCurrency.CanAfford(Data.Cost))
                 {
-                    upgradeButton.enabled = true;
+                    upgradeButton.interactable = true;
                     upgradeButton.image.sprite = enabledButtonSprite;
                 }
                 else
                 {
-                    upgradeButton.enabled = false;
+                    upgradeButton.interactable = false;
                     upgradeButton.image.sprite = disabledButtonSprite;
                 }
             }
@@ -120,6 +142,8 @@ namespace OctoberStudio.UI
             charactersSave.SetSelectedCharacterId(CharacterId);
 
             GameController.AudioManager.PlaySound(AudioManager.BUTTON_CLICK_HASH);
+
+            EventSystem.current.SetSelectedGameObject(upgradeButton.gameObject);
         }
 
         private void OnGoldAmountChanged(int amount)
@@ -127,14 +151,38 @@ namespace OctoberStudio.UI
             RedrawButton();
         }
 
-        private void OnDestroy()
+        public void Select()
+        {
+            EventSystem.current.SetSelectedGameObject(upgradeButton.gameObject);
+        }
+
+        public void Unselect()
+        {
+            IsSelected = false;
+        }
+
+        private void Update()
+        {
+            if(!IsSelected && EventSystem.current.currentSelectedGameObject == upgradeButton.gameObject)
+            {
+                IsSelected = true;
+
+                onNavigationSelected?.Invoke(this);
+            } 
+            else if(IsSelected && EventSystem.current.currentSelectedGameObject != upgradeButton.gameObject)
+            {
+                IsSelected = false;
+            } 
+        }
+
+        public void Clear()
         {
             if (GoldCurrency != null)
             {
-                GoldCurrency.OnGoldAmountChanged -= OnGoldAmountChanged;
+                GoldCurrency.onGoldAmountChanged -= OnGoldAmountChanged;
             }
 
-            if(charactersSave != null)
+            if (charactersSave != null)
             {
                 charactersSave.onSelectedCharacterChanged -= RedrawVisuals;
             }

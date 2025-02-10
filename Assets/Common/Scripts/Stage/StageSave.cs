@@ -16,6 +16,8 @@ namespace OctoberStudio
         [SerializeField] float xp;
         [SerializeField] int enemiesKilled;
 
+        public bool loadedBefore = false;
+
         public event UnityAction<int> onSelectedStageChanged;
 
         public int SelectedStageId => selectedStageId;

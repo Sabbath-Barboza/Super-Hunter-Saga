@@ -173,5 +173,27 @@ namespace OctoberStudio.Save
             }
             return cipherText;
         }
+
+        public static bool IsFileLocked(string fileName)
+        {
+            string absolutePath = persistentDataPath + fileName;
+
+            if (!File.Exists(absolutePath)) return false;
+
+            try
+            {
+                var file = new FileInfo(absolutePath);
+                using (FileStream stream = file.Open(FileMode.Open, FileAccess.Read, FileShare.None))
+                {
+                    stream.Close();
+                }
+            }
+            catch (IOException)
+            {
+                return true;
+            }
+
+            return false;
+        }
     }
 }

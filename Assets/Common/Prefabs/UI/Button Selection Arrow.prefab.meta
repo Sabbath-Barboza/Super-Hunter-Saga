@@ -1,6 +1,6 @@
 fileFormatVersion: 2
-guid: 2e950501170d9544cbcaa7a655afd965
-TextScriptImporter:
+guid: f35fff7e94c04834e805e06cda2ebc00
+PrefabImporter:
   externalObjects: {}
   userData: 
   assetBundleName: 
@@ -9,6 +9,6 @@ AssetOrigin:
   serializedVersion: 1
   productId: 304936
   packageName: Monster Survivors - Full Game
-  packageVersion: 1.0.1
-  assetPath: Assets/package.json
-  uploadId: 726958
+  packageVersion: 1.0.2
+  assetPath: Assets/Common/Prefabs/UI/Button Selection Arrow.prefab
+  uploadId: 728543

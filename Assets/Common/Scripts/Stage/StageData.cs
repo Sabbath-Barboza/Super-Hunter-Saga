@@ -24,6 +24,12 @@ namespace OctoberStudio
         [SerializeField] StageFieldData stageFieldData;
         public StageFieldData StageFieldData => stageFieldData;
 
+        [SerializeField] bool spawnProp;
+        public bool SpawnProp => spawnProp;
+
+        [SerializeField] bool removePropFromBossfight;
+        public bool RemovePropFromBossfight => removePropFromBossfight;
+
         [Space]
         [SerializeField] Color spotlightColor;
         public Color SpotlightColor => spotlightColor;

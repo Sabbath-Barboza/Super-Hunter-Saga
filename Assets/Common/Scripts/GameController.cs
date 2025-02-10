@@ -10,6 +10,7 @@ namespace OctoberStudio
     using Save;
     using OctoberStudio.Audio;
     using OctoberStudio.Easing;
+    using OctoberStudio.Input;
 
     public class GameController : MonoBehaviour
     {
@@ -32,6 +33,9 @@ namespace OctoberStudio
 
         [SerializeField] AudioDatabase audioDatabase;
         public static AudioDatabase AudioDatabase => instance.audioDatabase;
+
+        [SerializeField] InputManager inputManager;
+        public static InputManager InputManager => instance.inputManager;
 
         public static CurrencySave Gold { get; private set; }
         public static CurrencySave TempGold { get; private set; }
@@ -60,6 +64,7 @@ namespace OctoberStudio
 
             currenciesManager.Init();
             saveManager.Init();
+            inputManager.Init();
 
             DontDestroyOnLoad(gameObject);
 
@@ -75,24 +80,33 @@ namespace OctoberStudio
 
             stageSave = SaveManager.GetSave<StageSave>("Stage");
 
+            if (!stageSave.loadedBefore)
+            {
+                stageSave.loadedBefore = true;
+
+                //Gold.Deposit(1000);
+            }
+
             EasingManager.DoAfter(0.1f, () => Music = AudioDatabase.Music.Play(true));
         }
 
         public static void LoadStage()
         {
             if(stageSave.ResetStageData) TempGold.Withdraw(TempGold.Amount);
-            SaveManager.Save(true, true);
-
+            
             instance.StartCoroutine(StageLoadingCoroutine());
+
+            SaveManager.Save(false);
         }
 
         public static void LoadMainMenu()
         {
             Gold.Deposit(TempGold.Amount);
             TempGold.Withdraw(TempGold.Amount);
-            SaveManager.Save(true, true);
 
             if (instance != null) instance.StartCoroutine(MainMenuLoadingCoroutine());
+
+            SaveManager.Save(false);
         }
 
         private static IEnumerator StageLoadingCoroutine()
