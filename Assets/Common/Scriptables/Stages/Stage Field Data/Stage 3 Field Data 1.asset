@@ -12,21 +12,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 108aeb0c3fe1ce34588d447d300c8020, type: 3}
   m_Name: Stage 3 Field Data 1
   m_EditorClassIdentifier: 
-  backgroundPrefab: {fileID: 4228152677517912084, guid: 6db061bf302b26d42a0e336ad7c3b8f8,
+  backgroundPrefab: {fileID: 4228152677517912084, guid: fedbcf7f10def61489d6e64d5ca4c986,
     type: 3}
-  topPrefab: {fileID: 3057872433570077357, guid: ad957230a71ce374b813eba750025fbb,
+  topPrefab: {fileID: 3057872433570077357, guid: ec9b2af3e289b8f48bc530ade0a3297d,
     type: 3}
-  bottomPrefab: {fileID: 464442095299332598, guid: 309cb689d34e2bc41b1a15c157ac3678,
+  bottomPrefab: {fileID: 464442095299332598, guid: c640349a1fc792a458ae5c8b18f11068,
     type: 3}
-  leftPrefab: {fileID: 6705434063911671504, guid: 8987a1d04dc9b6d4192ef5be24107d5f,
+  leftPrefab: {fileID: 6705434063911671504, guid: af2d445df89e37745a1a15c9cfffe4d5,
     type: 3}
-  rightPrefab: {fileID: 8863145417921677161, guid: 5a77b215b4b151a478c2fd303bcffadb,
+  rightPrefab: {fileID: 8863145417921677161, guid: 6eb973b0680b0344e88feb72437e9732,
     type: 3}
-  topRightPrefab: {fileID: 3541167979401028516, guid: 0ac3ae68764071149bd1343a25075113,
+  topRightPrefab: {fileID: 3541167979401028516, guid: 932686598a1ccd84d91172bb3debdb0a,
     type: 3}
-  topLeftPrefab: {fileID: 3541167979401028516, guid: 0ac3ae68764071149bd1343a25075113,
+  topLeftPrefab: {fileID: 3541167979401028516, guid: 82f3e3b7bb6fec74897c60838edcf300,
     type: 3}
-  bottomRightPrefab: {fileID: 3541167979401028516, guid: 0ac3ae68764071149bd1343a25075113,
+  bottomRightPrefab: {fileID: 3541167979401028516, guid: 582bc07ea12fd5a40a713d50cf0993bd,
     type: 3}
-  bottomLeftPrefab: {fileID: 3541167979401028516, guid: 0ac3ae68764071149bd1343a25075113,
+  bottomLeftPrefab: {fileID: 3541167979401028516, guid: 48f1bd8292226c84a9c9f93f055099fb,
     type: 3}
+  propChances: []

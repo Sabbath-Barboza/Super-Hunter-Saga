@@ -1,0 +1,2 @@
+D:\Sabbath Barboza\GitHub Projects\Work Projects\Super-Hunter-Saga\Library\Bee\Android\Prj\IL2CPP\Gradle\unityLibrary\src\main\cpp\CMakeLists.txt
+D:\Sabbath Barboza\GitHub Projects\Work Projects\Super-Hunter-Saga\Library\Bee\Android\Prj\IL2CPP\Gradle\unityLibrary\src\main\cpp\GameActivity\CMakeLists.txt
