@@ -66,7 +66,7 @@ public class AdsManager : MonoBehaviour
     #endregion
 
     #region Interstitial AD
-    private void LoadIntertitialAD()
+    public void LoadIntertitialAD()
     {
         Debug.Log("Loading the Interstitial Ad");
 

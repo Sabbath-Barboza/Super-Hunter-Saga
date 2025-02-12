@@ -22,6 +22,7 @@ namespace OctoberStudio.UI
         private void Awake()
         {
             canvas = GetComponent<Canvas>();
+            AdsManager.Adinstance.LoadIntertitialAD();
 
             reviveButton.onClick.AddListener(ReviveButtonClick);
             exitButton.onClick.AddListener(ExitButtonClick);
@@ -62,6 +63,7 @@ namespace OctoberStudio.UI
 
         private void ReviveButtonClick()
         {
+            AdsManager.Adinstance.ShowIntertitialAD();
             GameController.AudioManager.PlaySound(AudioManager.BUTTON_CLICK_HASH);
             Hide(StageController.ResurrectPlayer);
             revivedAlready = true;
@@ -69,6 +71,7 @@ namespace OctoberStudio.UI
 
         private void ExitButtonClick()
         {
+            AdsManager.Adinstance.ShowIntertitialAD();
             GameController.AudioManager.PlaySound(AudioManager.BUTTON_CLICK_HASH);
             Time.timeScale = 1;
             StageController.ReturnToMainMenu();

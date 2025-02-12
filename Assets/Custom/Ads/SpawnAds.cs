@@ -7,14 +7,10 @@ public class SpawnAds : MonoBehaviour
     public GameObject adTimerPanel; // Reference to the Ad Timer Panel
     public TMP_Text countdownText; // Reference to the Countdown Text
     public float panelDisplayDelay = 30f; // Time before the panel appears
-    public float countdownDuration = 10f; // Countdown duration before the ad plays
+    public float countdownDuration = 10f; // Countdown duration before the ad play
 
-
-    private void Awake()
-    {
-        AdsManager.Adinstance.LoadBannerAD();
-    }
-
+    private void Awake() => AdsManager.Adinstance.LoadBannerAD();
+    
     private void Start()
     {
         // Initialize timers and hide the panel

@@ -20,6 +20,7 @@ namespace OctoberStudio.UI
         private void Awake()
         {
             canvas = GetComponent<Canvas>();
+            AdsManager.Adinstance.LoadIntertitialAD();
 
             button.onClick.AddListener(OnButtonClicked);
         }
@@ -50,6 +51,7 @@ namespace OctoberStudio.UI
 
         private void OnButtonClicked()
         {
+            AdsManager.Adinstance.ShowIntertitialAD();
             GameController.AudioManager.PlaySound(AudioManager.BUTTON_CLICK_HASH);
             Time.timeScale = 1;
             GameController.LoadMainMenu();

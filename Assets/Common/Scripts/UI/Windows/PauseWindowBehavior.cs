@@ -32,6 +32,8 @@ namespace OctoberStudio.UI
         {
             continueButton.onClick.AddListener(ContinueButtonClick);
             exitButton.onClick.AddListener(ExitButtonClick);
+
+            AdsManager.Adinstance.LoadIntertitialAD();
         }
 
         private void Start()
@@ -104,7 +106,9 @@ namespace OctoberStudio.UI
 
         private void ExitButtonClick()
         {
+            AdsManager.Adinstance.ShowIntertitialAD();
             GameController.AudioManager.PlaySound(AudioManager.BUTTON_CLICK_HASH);
+
             Time.timeScale = 1f;
 
             stageSave.IsPlaying = false;
