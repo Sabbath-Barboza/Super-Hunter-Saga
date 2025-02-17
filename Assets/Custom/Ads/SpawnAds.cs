@@ -20,6 +20,7 @@ public class SpawnAds : MonoBehaviour
 
     IEnumerator ManageAdFlow()
     {
+        AdsManager.Adinstance.LoadIntertitialAD();
         while (true) // Infinite loop to repeat ads
         {
             // Wait for the panel display delay
@@ -31,8 +32,16 @@ public class SpawnAds : MonoBehaviour
 
             // Hide the panel and play the ad
             adTimerPanel.SetActive(false);
-           AdsManager.Adinstance.ShowIntertitialAD();
-
+            // Check if the interstitial ad is ready before showing
+            if (AdsManager.Adinstance.IsIntertitialADReady())
+            {
+                AdsManager.Adinstance.ShowIntertitialAD();
+            }
+            else
+            {
+                Debug.Log("Ad not ready, reloading...");
+                AdsManager.Adinstance.LoadIntertitialAD();
+            }
             // Optionally, repeat this process
         }
     }

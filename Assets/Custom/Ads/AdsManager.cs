@@ -1,5 +1,6 @@
 using GoogleMobileAds.Api;
 using System;
+using Unity.VisualScripting;
 using UnityEngine;
 
 
@@ -12,6 +13,10 @@ public class AdsManager : MonoBehaviour
     private InterstitialAd interstitialAd;
     private RewardedInterstitialAd rewardedInterstitialAd;
 
+    private bool isInterstitialReady = false;
+
+    private bool WasPaused = false;
+
 
     private void Awake()
     {
@@ -21,7 +26,7 @@ public class AdsManager : MonoBehaviour
             return;
         }
         Adinstance = this;
-        DontDestroyOnLoad(gameObject);
+        DontDestroyOnLoad(this.gameObject);
     }
 
     public void Start()
@@ -33,6 +38,7 @@ public class AdsManager : MonoBehaviour
         LoadIntertitialAD();
         LoadRewardedIntertitialAD();
     }
+
 
     #region Banner AD    
     private void CreateBannerAD()   // Created Banner AD Before it displays Banner Ads
@@ -48,7 +54,7 @@ public class AdsManager : MonoBehaviour
     {
         if(bannerView == null) CreateBannerAD();
 
-        var adRequest = new AdRequest();  
+        var adRequest = new AdRequest();
 
         Debug.Log("Loading Banner Ad");
         bannerView.LoadAd(adRequest);  // Requesting to load ad
@@ -106,6 +112,7 @@ public class AdsManager : MonoBehaviour
         {
             Debug.Log("Showing Intertitial Ad");
             interstitialAd.Show();
+            isInterstitialReady = false;
         }
         else
         {
@@ -113,6 +120,25 @@ public class AdsManager : MonoBehaviour
         }
         LoadIntertitialAD();
     }
+
+    public bool IsIntertitialADReady()
+    {
+        return isInterstitialReady;
+    }
+
+     void OnApplicationPause(bool pause)
+    {
+        if(pause)
+        {
+            WasPaused = true;
+        }
+        else if(WasPaused)
+        {
+            ShowIntertitialAD();
+            WasPaused = false;
+        }
+    }
+
     #endregion
 
     #region Rewarded Intertitial AD

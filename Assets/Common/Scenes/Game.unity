@@ -1593,7 +1593,7 @@ MonoBehaviour:
   adTimerPanel: {fileID: 983820426}
   countdownText: {fileID: 1805460014}
   panelDisplayDelay: 120
-  countdownDuration: 5
+  countdownDuration: 8
 --- !u!4 &1993539685 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4789254232476901193, guid: 8e6d8d2dabc65504d87acf063e0db163,
