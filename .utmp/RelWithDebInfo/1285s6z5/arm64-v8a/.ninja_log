@@ -1,0 +1,10 @@
+# ninja log v5
+96	1878	7615622410335063	GameActivity/CMakeFiles/game.dir/UGAInputKeyEvent.cpp.o	2cf2f9d76d7143a2
+29	2098	7615622412476329	GameActivity/CMakeFiles/game.dir/UGAConfiguration.cpp.o	3c3062933e067d84
+587	2571	7615622417182791	GameActivity/CMakeFiles/game.dir/UGASoftKeyboard.cpp.o	d556b39d9c439733
+245	2970	7615622421124373	GameActivity/CMakeFiles/game.dir/UGAInput.cpp.o	d843b77179cb60c7
+566	2982	7615622421104373	GameActivity/CMakeFiles/game.dir/UGAInputMotionEvent.cpp.o	b3c47c69b5d37850
+198	3446	7615622425835716	GameActivity/CMakeFiles/game.dir/UGAEntry.cpp.o	f76a7a4fe02f1f37
+1	3561	7615622426923864	GameActivity/CMakeFiles/game.dir/UGADebug.cpp.o	32f5d2566d3990ce
+47	3922	7615622430958714	GameActivity/CMakeFiles/game.dir/UGAApplication.cpp.o	9db7a62c70619969
+3923	4282	7615622434694225	D:/Sabbath Barboza/GitHub Projects/Work Projects/Super-Hunter-Saga/Library/Bee/Android/Prj/IL2CPP/Gradle/unityLibrary/build/intermediates/cxx/RelWithDebInfo/1285s6z5/obj/arm64-v8a/libgame.so	443d6e901f33e51c

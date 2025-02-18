@@ -1,6 +1,5 @@
 using GoogleMobileAds.Api;
 using System;
-using Unity.VisualScripting;
 using UnityEngine;
 
 
@@ -14,7 +13,6 @@ public class AdsManager : MonoBehaviour
     private RewardedInterstitialAd rewardedInterstitialAd;
 
     private bool isInterstitialReady = false;
-
     private bool WasPaused = false;
 
 
@@ -27,6 +25,7 @@ public class AdsManager : MonoBehaviour
         }
         Adinstance = this;
         DontDestroyOnLoad(this.gameObject);
+        LoadBannerAD();
     }
 
     public void Start()
@@ -34,7 +33,6 @@ public class AdsManager : MonoBehaviour
         MobileAds.Initialize(InitializationStatus => { });
         Debug.Log("The Ads are Initialize");
 
-        LoadBannerAD();
         LoadIntertitialAD();
         LoadRewardedIntertitialAD();
     }

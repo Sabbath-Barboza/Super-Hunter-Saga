@@ -3,7 +3,6 @@ using UnityEngine.UI;
 
 public class RatingSystem : MonoBehaviour
 {
-
     [Header("Image:")]
     [SerializeField] private GameObject[] YellowStarImage;
 
@@ -48,7 +47,7 @@ public class RatingSystem : MonoBehaviour
     private void UpdateStars()
     {
         // Update Star Visual based on the Current Rating
-      for(int i = 0; i<WhiteStarButton.Length; i++)
+        for (int i = 0; i < WhiteStarButton.Length; i++)
         {
             YellowStarImage[i].SetActive(i < Rating);
         }
@@ -56,13 +55,13 @@ public class RatingSystem : MonoBehaviour
 
     private void SubmitRating()
     {
-        if(Rating > 3)
+        if (Rating > 3)
         {
             Application.OpenURL("https://play.google.com/store/apps/details?id=com.gameplmumbai.SuperHunterSaga");
         }
         else
         {
-            Debug.Log("User rated less then 0r equal to 1 star");
+            Debug.Log("User rated less than or equal to 3 stars");
         }
 
         // Save Rating And Disable The Panel
@@ -74,10 +73,10 @@ public class RatingSystem : MonoBehaviour
         ThankYouPanel.SetActive(true);
     }
 
-    private void OnStarClick(int Index)
+    private void OnStarClick(int index)
     {
-        //Set Rating and Update Star
-        Rating = Mathf.Clamp(Index + 1, 1, WhiteStarButton.Length); // Ensure Valid range
+        // Set Rating and Update Star
+        Rating = Mathf.Clamp(index + 1, 1, WhiteStarButton.Length); // Ensure Valid range
         UpdateStars();
     }
 

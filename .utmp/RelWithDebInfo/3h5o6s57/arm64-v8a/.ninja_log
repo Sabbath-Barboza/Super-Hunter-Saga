@@ -1,10 +1,10 @@
 # ninja log v5
-73	2074	7614977311992116	GameActivity/CMakeFiles/game.dir/UGAInputKeyEvent.cpp.o	13248d4f651a845f
-99	2122	7614977312479127	GameActivity/CMakeFiles/game.dir/UGAEntry.cpp.o	7012218d0749ac7f
-19	2125	7614977312569125	GameActivity/CMakeFiles/game.dir/UGAConfiguration.cpp.o	5415aa6719740faf
-148	2214	7614977313431965	GameActivity/CMakeFiles/game.dir/UGAInputMotionEvent.cpp.o	e8ffcfa444f6c40f
-122	2216	7614977313431965	GameActivity/CMakeFiles/game.dir/UGASoftKeyboard.cpp.o	2145d45a7650a9dd
-1	2301	7614977314386477	GameActivity/CMakeFiles/game.dir/UGADebug.cpp.o	360dab489b7c7831
-49	2560	7614977316969903	GameActivity/CMakeFiles/game.dir/UGAInput.cpp.o	145be0e2b5198540
-33	2756	7614977318916147	GameActivity/CMakeFiles/game.dir/UGAApplication.cpp.o	31fa4f8a1f7ff836
-2769	3088	7614977322258758	D:/Sabbath Barboza/GitHub Projects/Work Projects/Super-Hunter-Saga/Library/Bee/Android/Prj/IL2CPP/Gradle/unityLibrary/build/intermediates/cxx/RelWithDebInfo/3h5o6s57/obj/arm64-v8a/libgame.so	bc6be3d58af9249c
+109	1778	7615618702104026	GameActivity/CMakeFiles/game.dir/UGAInputKeyEvent.cpp.o	13248d4f651a845f
+1	1783	7615618702154464	GameActivity/CMakeFiles/game.dir/UGAConfiguration.cpp.o	5415aa6719740faf
+135	1796	7615618702329638	GameActivity/CMakeFiles/game.dir/UGAInputMotionEvent.cpp.o	e8ffcfa444f6c40f
+83	1796	7615618702329638	GameActivity/CMakeFiles/game.dir/UGAEntry.cpp.o	7012218d0749ac7f
+164	1894	7615618703390160	GameActivity/CMakeFiles/game.dir/UGASoftKeyboard.cpp.o	2145d45a7650a9dd
+16	1954	7615618704004056	GameActivity/CMakeFiles/game.dir/UGADebug.cpp.o	360dab489b7c7831
+58	2145	7615618705920710	GameActivity/CMakeFiles/game.dir/UGAInput.cpp.o	145be0e2b5198540
+36	2297	7615618707426259	GameActivity/CMakeFiles/game.dir/UGAApplication.cpp.o	31fa4f8a1f7ff836
+2297	2410	7615618708605215	D:/Sabbath Barboza/GitHub Projects/Work Projects/Super-Hunter-Saga/Library/Bee/Android/Prj/IL2CPP/Gradle/unityLibrary/build/intermediates/cxx/RelWithDebInfo/3h5o6s57/obj/arm64-v8a/libgame.so	bc6be3d58af9249c

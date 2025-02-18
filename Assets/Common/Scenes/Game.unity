@@ -1592,7 +1592,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   adTimerPanel: {fileID: 983820426}
   countdownText: {fileID: 1805460014}
-  panelDisplayDelay: 120
+  panelDisplayDelay: 30
   countdownDuration: 8
 --- !u!4 &1993539685 stripped
 Transform:
