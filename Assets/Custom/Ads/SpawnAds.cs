@@ -32,6 +32,7 @@ public class SpawnAds : MonoBehaviour
 
             // Hide the panel and play the ad
             adTimerPanel.SetActive(false);
+
             // Check if the interstitial ad is ready before showing
             if (AdsManager.Adinstance.IsIntertitialADReady())
             {
